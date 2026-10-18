@@ -8,7 +8,6 @@ import {
   rationalQ,
   severity,
   runSimulation,
-  exportConduitsCsv,
   RAINFALL_PRESETS,
   type ConduitInput,
   type SimulationParams,

@@ -20,6 +20,7 @@ export const Header: FC<HeaderProps> = ({ onOpenSearch }) => {
   const navLinks = [
     { name: 'Workspace', path: '/workspace' },
     { name: 'Scenarios', path: '/scenarios' },
+    { name: 'Bottlenecks', path: '/bottleneck' },
     { name: 'Methodology', path: '/methodology' },
     { name: 'Flood School', path: '/learn' },
     { name: 'Contact', path: '/contact' },

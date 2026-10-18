@@ -11,6 +11,7 @@ import { ConfirmationModal } from './components/common/ConfirmationModal';
 import { LandingPage } from './pages/LandingPage';
 import { WorkspacePage } from './pages/WorkspacePage';
 import { ScenariosPage } from './pages/ScenariosPage';
+import { BottleneckPage } from './pages/BottleneckPage';
 import { ReportPage } from './pages/ReportPage';
 import { MethodologyPage } from './pages/MethodologyPage';
 import { LearnPage } from './pages/LearnPage';
@@ -53,6 +54,7 @@ export function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/workspace" element={<WorkspacePage />} />
               <Route path="/scenarios" element={<ScenariosPage />} />
+              <Route path="/bottleneck" element={<BottleneckPage />} />
               <Route path="/reports/:id" element={<ReportPage />} />
               <Route path="/reports" element={<ReportPage />} />
               <Route path="/methodology" element={<MethodologyPage />} />
