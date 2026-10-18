@@ -1,0 +1,341 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-HOSUR-01",
+        "name": "Hosur Main Road",
+        "highway": "primary",
+        "length_m": 3171.2,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.612,
+            12.922
+          ],
+          [
+            77.616,
+            12.928
+          ],
+          [
+            77.62,
+            12.934
+          ],
+          [
+            77.624,
+            12.94
+          ],
+          [
+            77.628,
+            12.946
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-80FT-01",
+        "name": "80 Feet Road",
+        "highway": "secondary",
+        "length_m": 2993.4,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.625,
+            12.921
+          ],
+          [
+            77.6245,
+            12.927
+          ],
+          [
+            77.624,
+            12.934
+          ],
+          [
+            77.6235,
+            12.941
+          ],
+          [
+            77.623,
+            12.948
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-100FT-01",
+        "name": "100 Feet Road",
+        "highway": "secondary",
+        "length_m": 2712.5,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.614,
+            12.934
+          ],
+          [
+            77.62,
+            12.934
+          ],
+          [
+            77.624,
+            12.934
+          ],
+          [
+            77.632,
+            12.934
+          ],
+          [
+            77.639,
+            12.934
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-SARJ-01",
+        "name": "Sarjapur Approach Road",
+        "highway": "secondary",
+        "length_m": 2004.4,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.62,
+            12.925
+          ],
+          [
+            77.626,
+            12.925
+          ],
+          [
+            77.633,
+            12.926
+          ],
+          [
+            77.638,
+            12.928
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-IRR-01",
+        "name": "Koramangala Intermediate Ring Road",
+        "highway": "primary",
+        "length_m": 1139.5,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.628,
+            12.946
+          ],
+          [
+            77.633,
+            12.945
+          ],
+          [
+            77.638,
+            12.943
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-BLK4-01",
+        "name": "4th Block 1st Main",
+        "highway": "residential",
+        "length_m": 1033.4,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.624,
+            12.934
+          ],
+          [
+            77.628,
+            12.937
+          ],
+          [
+            77.632,
+            12.939
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-BLK4-02",
+        "name": "4th Block 3rd Cross",
+        "highway": "residential",
+        "length_m": 1216.3,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.628,
+            12.931
+          ],
+          [
+            77.628,
+            12.937
+          ],
+          [
+            77.628,
+            12.942
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-BLK5-01",
+        "name": "5th Block Jyoti Nivas College Road",
+        "highway": "tertiary",
+        "length_m": 1086.6,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.616,
+            12.934
+          ],
+          [
+            77.618,
+            12.93
+          ],
+          [
+            77.62,
+            12.925
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-BLK5-02",
+        "name": "5th Block Cross 6",
+        "highway": "residential",
+        "length_m": 922.2,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.616,
+            12.93
+          ],
+          [
+            77.62,
+            12.93
+          ],
+          [
+            77.6245,
+            12.93
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-STBED-01",
+        "name": "ST Bed Main Access",
+        "highway": "residential",
+        "length_m": 929.5,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.626,
+            12.925
+          ],
+          [
+            77.629,
+            12.928
+          ],
+          [
+            77.632,
+            12.931
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "RD-STBED-02",
+        "name": "Cauvery Basin Link Road",
+        "highway": "residential",
+        "length_m": 929.5,
+        "is_synthetic": false,
+        "source": "OpenStreetMap Centerlines (Curated Extent)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.632,
+            12.931
+          ],
+          [
+            77.635,
+            12.934
+          ],
+          [
+            77.638,
+            12.937
+          ]
+        ]
+      }
+    }
+  ]
+}

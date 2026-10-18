@@ -1,0 +1,43 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Koramangala Catchment Study Area",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "crs": "EPSG:4326",
+        "projected_crs": "EPSG:32643",
+        "area_km2": 10.45
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.61,
+              12.92
+            ],
+            [
+              77.642,
+              12.92
+            ],
+            [
+              77.642,
+              12.95
+            ],
+            [
+              77.61,
+              12.95
+            ],
+            [
+              77.61,
+              12.92
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

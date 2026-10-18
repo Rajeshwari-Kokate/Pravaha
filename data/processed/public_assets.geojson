@@ -1,0 +1,124 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "AST-HOSP-01",
+        "name": "St. John's Medical College Hospital",
+        "category": "hospital",
+        "is_synthetic": false,
+        "source": "OpenStreetMap Civic Infrastructure"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.619,
+          12.928
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "AST-HOSP-02",
+        "name": "Beams Multi-Specialty Hospital",
+        "category": "hospital",
+        "is_synthetic": false,
+        "source": "OpenStreetMap Civic Infrastructure"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.6275,
+          12.935
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "AST-FIRE-01",
+        "name": "South Bengaluru Central Fire Station",
+        "category": "fire_station",
+        "is_synthetic": false,
+        "source": "OpenStreetMap Civic Infrastructure"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.6225,
+          12.9385
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "AST-ELEC-01",
+        "name": "KPTCL 66/11kV Master Substation",
+        "category": "substation",
+        "is_synthetic": false,
+        "source": "OpenStreetMap Civic Infrastructure"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.631,
+          12.942
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "AST-SCH-01",
+        "name": "Bethany High School Complex",
+        "category": "school",
+        "is_synthetic": false,
+        "source": "OpenStreetMap Civic Infrastructure"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.626,
+          12.936
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "AST-TRAN-01",
+        "name": "Koramangala BMTC TTMC Transit Hub",
+        "category": "transit",
+        "is_synthetic": false,
+        "source": "OpenStreetMap Civic Infrastructure"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.623,
+          12.931
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "AST-TRAN-02",
+        "name": "Sony World Junction Transit Point",
+        "category": "transit",
+        "is_synthetic": false,
+        "source": "OpenStreetMap Civic Infrastructure"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.624,
+          12.934
+        ]
+      }
+    }
+  ]
+}
