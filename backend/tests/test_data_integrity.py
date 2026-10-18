@@ -5,19 +5,26 @@ Validates dataset loading, profile report generation, GeoJSON schemas, and synth
 
 import os
 import json
+from pathlib import Path
 import pytest
 from shapely.geometry import shape
 
+# Absolute repo root: backend/tests/ is two levels below repo root
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
 
 def test_dataset_raw_file_exists():
-    path = os.environ.get("DATASET_PATH", "data/raw/flood_risk_dataset_india.csv")
-    assert os.path.exists(path), f"Raw dataset not found at {path}"
-    assert os.path.getsize(path) > 1000000, "Dataset file size smaller than expected"
+    path = Path(os.environ.get(
+        "DATASET_PATH",
+        str(REPO_ROOT / "data" / "raw" / "flood_risk_dataset_india.csv")
+    ))
+    assert path.exists(), f"Raw dataset not found at {path}"
+    assert path.stat().st_size > 1000000, "Dataset file size smaller than expected"
 
 
 def test_dataset_report_generated():
-    report_path = "docs/DATASET_REPORT.md"
-    assert os.path.exists(report_path), "Dataset report does not exist"
+    report_path = REPO_ROOT / "docs" / "DATASET_REPORT.md"
+    assert report_path.exists(), "Dataset report does not exist"
     with open(report_path, "r", encoding="utf-8") as f:
         content = f.read()
     assert "origin and licence unverified" in content
@@ -26,8 +33,8 @@ def test_dataset_report_generated():
 
 
 def test_regional_aggregates_json():
-    agg_path = "data/processed/regional_aggregates.json"
-    assert os.path.exists(agg_path), "Regional aggregates JSON missing"
+    agg_path = REPO_ROOT / "data" / "processed" / "regional_aggregates.json"
+    assert agg_path.exists(), "Regional aggregates JSON missing"
     with open(agg_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     assert data["metadata"]["status"] == "origin and licence unverified"
@@ -36,23 +43,28 @@ def test_regional_aggregates_json():
 
 
 def test_processed_geojson_validity():
-    files = ["study_area.geojson", "roads.geojson", "public_assets.geojson", "drainage_network.geojson"]
+    files = [
+        "study_area.geojson",
+        "roads.geojson",
+        "public_assets.geojson",
+        "drainage_network.geojson",
+    ]
     for fname in files:
-        path = os.path.join("data/processed", fname)
-        assert os.path.exists(path), f"Processed file {fname} not found"
+        path = REPO_ROOT / "data" / "processed" / fname
+        assert path.exists(), f"Processed file {fname} not found"
         with open(path, "r", encoding="utf-8") as f:
             fc = json.load(f)
         assert fc["type"] == "FeatureCollection"
         assert len(fc["features"]) > 0
 
-        # Validate shapely geometries
+        # Validate Shapely geometries
         for feat in fc["features"]:
             geom = shape(feat["geometry"])
             assert geom.is_valid, f"Invalid geometry in {fname}: {feat['properties']}"
 
 
 def test_synthetic_drainage_attributes():
-    path = "data/processed/drainage_network.geojson"
+    path = REPO_ROOT / "data" / "processed" / "drainage_network.geojson"
     with open(path, "r", encoding="utf-8") as f:
         fc = json.load(f)
 

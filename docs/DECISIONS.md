@@ -43,5 +43,15 @@ This log records technical, architectural, and design decisions made during the 
 ## Decision 9: PyPI Package Mirror Fallback
 - Context: Direct outbound HTTPS connections to `pypi.org` and `files.pythonhosted.org` timed out due to regional network routing constraints in the execution environment.
 - Decision: In compliance with SECTION 0 ("If a download, API or package fails, use the documented fallback and record it. Never fake data to hide a failure"), pip was configured with a documented high-speed public mirror (`https://pypi.tuna.tsinghua.edu.cn/simple`). All required dependencies (`fastapi`, `pydantic`, `networkx`, `numpy`, `shapely`, `pandas`, `scikit-learn`, `httpx`, `pytest`) were verified and installed cleanly.
+## Decision 10: Phase 4 Simulation Engine Design
 
+- Context: Phase 4 required a deterministic, graph-based flood routing engine with SQLite persistence, golden test fixtures, and a full pytest suite.
+- Decision: Implemented `FloodSimulationEngine` in `backend/app/simulation/engine.py` using a NetworkX `DiGraph`. Topological sort (upstream-to-downstream) ensures single-pass propagation without iteration. Overflow from overloaded conduits propagates as additional surface-runoff load to downstream nodes. Hotspot polygons use a greedy distance-based clustering (400 m merge radius) with a 150 m buffer. Road intersections use exact 2D line-segment intersection tests (no spatial index needed at this scale). Timeline uses a triangular hyetograph centred at the midpoint step. All results are serialised as Pydantic v2 JSON and persisted to `data/simulations.db` via SQLite.
+- Rationale: NetworkX topological sort is exact for DAGs and eliminates iterative convergence errors. The Rational Method (Q = C*i*A/360) is mandated by CPHEEO for urban catchments under 100 ha. Greedy clustering is O(n^2) but sufficient for the current 20-conduit synthetic network. The SQLite store provides a zero-dependency persistence layer suitable for the demo environment.
+
+## Decision 11: Test Path Resolution
+
+- Context: `test_data_integrity.py` used CWD-relative paths, causing failures when pytest is invoked from `backend/` rather than the repo root.
+- Decision: All test files now derive the repo root from `Path(__file__).resolve().parents[N]`, making them working-directory independent.
+- Rationale: Reproducible CI regardless of invocation directory.
 
