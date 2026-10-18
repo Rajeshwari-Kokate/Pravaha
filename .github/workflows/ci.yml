@@ -30,7 +30,7 @@ jobs:
 
       - name: Run Pytest suite
         run: |
-          python -m pytest backend/tests -v --tb=short
+          python -m pytest backend/tests -v --tb=short -rA
 
   frontend-test-and-build:
     name: Frontend Vitest & Build

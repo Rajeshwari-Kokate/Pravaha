@@ -182,7 +182,8 @@ def test_mocked_valid_gemma_llm_response(sample_run_data):
         request=httpx.Request("POST", "http://test/chat/completions"),
     )
 
-    with patch("httpx.AsyncClient.post", return_value=resp_obj):
+    with patch.object(httpx.AsyncClient, "post", new_callable=AsyncMock) as mock_post:
+        mock_post.return_value = resp_obj
         report = asyncio.run(generator.generate_report(sample_run_data))
         assert report.is_fallback is False
         assert report.generated_by_model == generator.model
