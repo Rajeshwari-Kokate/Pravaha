@@ -5,8 +5,12 @@ and Operator Passcode authentication with constant-time verification.
 
 import pytest
 from fastapi.testclient import TestClient
-from backend.app.main import app
-from backend.app.routers.admin import ADMIN_PASSCODE
+try:
+    from backend.app.main import app
+    from backend.app.routers.admin import ADMIN_PASSCODE
+except ImportError:
+    from app.main import app
+    from app.routers.admin import ADMIN_PASSCODE
 
 
 @pytest.fixture

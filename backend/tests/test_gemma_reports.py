@@ -8,9 +8,14 @@ import pytest
 from unittest.mock import patch, AsyncMock
 from fastapi.testclient import TestClient
 
-from backend.app.main import app
-from backend.app.gemma.schema import InvestigationReport, HotspotFinding, CandidateBottleneck
-from backend.app.gemma.client import GemmaReportGenerator
+try:
+    from backend.app.main import app
+    from backend.app.gemma.schema import InvestigationReport, HotspotFinding, CandidateBottleneck
+    from backend.app.gemma.client import GemmaReportGenerator
+except ImportError:
+    from app.main import app
+    from app.gemma.schema import InvestigationReport, HotspotFinding, CandidateBottleneck
+    from app.gemma.client import GemmaReportGenerator
 
 
 @pytest.fixture

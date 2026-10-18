@@ -4,8 +4,12 @@ Tests for Phase 7: Dataset analysis and ML susceptibility endpoints and model tr
 
 import pytest
 from fastapi.testclient import TestClient
-from backend.app.main import app
-from backend.app.ml.susceptibility import trainer, SusceptibilityModelTrainer
+try:
+    from backend.app.main import app
+    from backend.app.ml.susceptibility import trainer, SusceptibilityModelTrainer
+except ImportError:
+    from app.main import app
+    from app.ml.susceptibility import trainer, SusceptibilityModelTrainer
 
 
 @pytest.fixture

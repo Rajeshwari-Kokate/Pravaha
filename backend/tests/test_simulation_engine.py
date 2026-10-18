@@ -26,26 +26,48 @@ import pytest
 # parents[1] = backend/ (contains app/ package)
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.simulation.engine import (
-    FloodSimulationEngine,
-    _circle_polygon,
-    _haversine_m,
-    _rational_q,
-    _segments_intersect,
-    _severity,
-)
-from app.simulation.models import (
-    ReturnPeriod,
-    SeverityLevel,
-    SimulationInput,
-)
-from tests.fixtures.golden_simulation import (
-    BASELINE_10YR,
-    BASELINE_5YR,
-    EXTREME_100YR,
-    NEAR_ZERO,
-    RATIONAL_Q_FIXTURES,
-)
+try:
+    from backend.app.simulation.engine import (
+        FloodSimulationEngine,
+        _circle_polygon,
+        _haversine_m,
+        _rational_q,
+        _segments_intersect,
+        _severity,
+    )
+    from backend.app.simulation.models import (
+        ReturnPeriod,
+        SeverityLevel,
+        SimulationInput,
+    )
+    from backend.tests.fixtures.golden_simulation import (
+        BASELINE_10YR,
+        BASELINE_5YR,
+        EXTREME_100YR,
+        NEAR_ZERO,
+        RATIONAL_Q_FIXTURES,
+    )
+except ImportError:
+    from app.simulation.engine import (
+        FloodSimulationEngine,
+        _circle_polygon,
+        _haversine_m,
+        _rational_q,
+        _segments_intersect,
+        _severity,
+    )
+    from app.simulation.models import (
+        ReturnPeriod,
+        SeverityLevel,
+        SimulationInput,
+    )
+    from tests.fixtures.golden_simulation import (
+        BASELINE_10YR,
+        BASELINE_5YR,
+        EXTREME_100YR,
+        NEAR_ZERO,
+        RATIONAL_Q_FIXTURES,
+    )
 
 
 # ===========================================================================
@@ -373,8 +395,12 @@ class TestBoundaryConditions:
 
     def test_catchment_override_applied(self, engine):
         """Overriding a conduit's area should change its inflow."""
-        from app.simulation.models import CatchmentOverride
-        from app.config import RAINFALL_PRESETS
+        try:
+            from backend.app.simulation.models import CatchmentOverride
+            from backend.app.config import RAINFALL_PRESETS
+        except ImportError:
+            from app.simulation.models import CatchmentOverride
+            from app.config import RAINFALL_PRESETS
         conduit_id = list(engine._graph.edges(data=True))[0][2]["conduit_id"]
         baseline = SimulationInput(return_period=ReturnPeriod.yr10)
         r_base = engine.run(baseline)
@@ -430,11 +456,17 @@ class TestSQLitePersistence:
         assert len(fetched.timeline) == len(result_10yr.timeline)
 
     def test_db_file_exists(self):
-        from app.config import DB_PATH
+        try:
+            from backend.app.config import DB_PATH
+        except ImportError:
+            from app.config import DB_PATH
         assert DB_PATH.exists()
 
     def test_db_table_exists(self):
-        from app.config import DB_PATH
+        try:
+            from backend.app.config import DB_PATH
+        except ImportError:
+            from app.config import DB_PATH
         con = sqlite3.connect(DB_PATH)
         tables = [r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table'")]
         con.close()

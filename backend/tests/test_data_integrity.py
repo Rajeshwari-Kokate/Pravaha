@@ -14,10 +14,13 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_dataset_raw_file_exists():
-    path = Path(os.environ.get(
-        "DATASET_PATH",
-        str(REPO_ROOT / "data" / "raw" / "flood_risk_dataset_india.csv")
-    ))
+    env_p = os.environ.get("DATASET_PATH")
+    if env_p and Path(env_p).exists():
+        path = Path(env_p)
+    elif (REPO_ROOT / "data" / "raw" / "flood_risk_dataset_india.csv").exists():
+        path = REPO_ROOT / "data" / "raw" / "flood_risk_dataset_india.csv"
+    else:
+        path = REPO_ROOT / "flood_risk_dataset_india.csv"
     assert path.exists(), f"Raw dataset not found at {path}"
     assert path.stat().st_size > 1000000, "Dataset file size smaller than expected"
 
