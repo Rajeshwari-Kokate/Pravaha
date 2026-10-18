@@ -32,8 +32,9 @@ yarn-error.log*
 *.key
 
 # Data & Models
-data/raw/
 *.csv
+!flood_risk_dataset_india.csv
+!data/raw/flood_risk_dataset_india.csv
 !data/processed/*.csv
 *.onnx
 *.bin
