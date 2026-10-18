@@ -11,7 +11,7 @@ jobs:
     name: Backend Pytest Suite
     runs-on: ubuntu-latest
     env:
-      PYTHONPATH: .
+      PYTHONPATH: .:backend
       DATASET_PATH: data/raw/flood_risk_dataset_india.csv
     steps:
       - name: Check out repository
