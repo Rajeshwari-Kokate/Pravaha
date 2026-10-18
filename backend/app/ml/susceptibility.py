@@ -26,8 +26,13 @@ from sklearn.metrics import (
 )
 from sklearn.calibration import calibration_curve
 
-DATASET_PATH = os.environ.get("DATASET_PATH", "data/raw/flood_risk_dataset_india.csv")
-MODEL_CARD_PATH = os.environ.get("MODEL_CARD_PATH", "data/processed/model_card.json")
+try:
+    from backend.app.config import DATA_RAW, DATA_PROCESSED
+except ImportError:
+    from app.config import DATA_RAW, DATA_PROCESSED
+
+DATASET_PATH = os.environ.get("DATASET_PATH", str(DATA_RAW / "flood_risk_dataset_india.csv"))
+MODEL_CARD_PATH = os.environ.get("MODEL_CARD_PATH", str(DATA_PROCESSED / "model_card.json"))
 
 class SusceptibilityModelTrainer:
     def __init__(self, data_path: str = DATASET_PATH):

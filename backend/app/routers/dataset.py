@@ -14,8 +14,13 @@ from backend.app.ml.susceptibility import trainer
 
 router = APIRouter(prefix="/api/dataset", tags=["dataset"])
 
-REGIONAL_AGGREGATES_PATH = "data/processed/regional_aggregates.json"
-MODEL_CARD_PATH = "data/processed/model_card.json"
+try:
+    from backend.app.config import DATA_PROCESSED
+except ImportError:
+    from app.config import DATA_PROCESSED
+
+REGIONAL_AGGREGATES_PATH = str(DATA_PROCESSED / "regional_aggregates.json")
+MODEL_CARD_PATH = str(DATA_PROCESSED / "model_card.json")
 
 
 class SusceptibilityRequest(BaseModel):
