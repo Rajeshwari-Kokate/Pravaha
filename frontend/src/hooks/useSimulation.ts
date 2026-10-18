@@ -81,15 +81,23 @@ export function useSimulation(): UseSimulationReturn {
   useEffect(() => {
     if (conduits.length === 0) return;
     setIsLoading(true);
-    // Use requestIdleCallback so UI stays responsive
-    const id = requestIdleCallback(() => {
+    // Use requestIdleCallback with setTimeout fallback for cross-browser support (e.g. Safari)
+    const scheduleIdle = typeof window !== 'undefined' && typeof window.requestIdleCallback === 'function'
+      ? window.requestIdleCallback.bind(window)
+      : (cb: () => void) => window.setTimeout(cb, 1);
+
+    const cancelIdle = typeof window !== 'undefined' && typeof window.cancelIdleCallback === 'function'
+      ? window.cancelIdleCallback.bind(window)
+      : (id: number) => window.clearTimeout(id);
+
+    const id = scheduleIdle(() => {
       const out = runSimulation(conduits, params);
       setResult(out);
       setActiveStep(0);
       setIsPlaying(false);
       setIsLoading(false);
     });
-    return () => cancelIdleCallback(id);
+    return () => cancelIdle(id);
   }, [conduits, params]);
 
   // Playback interval
