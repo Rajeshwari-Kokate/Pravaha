@@ -5,9 +5,10 @@ import { ShieldAlert } from 'lucide-react';
 
 interface FooterProps {
   onOpenStoragePreferences?: () => void;
+  onOpenOperatorPasscode?: () => void;
 }
 
-export const Footer: FC<FooterProps> = ({ onOpenStoragePreferences }) => {
+export const Footer: FC<FooterProps> = ({ onOpenStoragePreferences, onOpenOperatorPasscode }) => {
   // Use injected build date
   const lastUpdated = typeof __BUILD_DATE__ !== 'undefined' ? __BUILD_DATE__ : '2026-10-18';
 
@@ -89,6 +90,15 @@ export const Footer: FC<FooterProps> = ({ onOpenStoragePreferences }) => {
                   className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-left"
                 >
                   Storage Preferences
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={onOpenOperatorPasscode}
+                  className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-left font-mono text-[10px] text-slate-400"
+                >
+                  Operator Passcode (Admin)
                 </button>
               </li>
             </ul>

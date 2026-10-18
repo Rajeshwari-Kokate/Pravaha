@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { Header } from './components/common/Header';
@@ -6,6 +6,10 @@ import { Footer } from './components/common/Footer';
 import { Preloader } from './components/common/Preloader';
 import { SiteCursor } from './components/common/SiteCursor';
 import { ConfirmationModal } from './components/common/ConfirmationModal';
+import { SiteSearchModal } from './components/common/SiteSearchModal';
+import { CookieBanner } from './components/common/CookieBanner';
+import { FloatingTools } from './components/common/FloatingTools';
+import { PasscodeModal } from './components/common/PasscodeModal';
 
 // Pages
 import { LandingPage } from './pages/LandingPage';
@@ -22,14 +26,30 @@ import { NotFoundPage } from './pages/NotFoundPage';
 
 export function App() {
   const [storageModalOpen, setStorageModalOpen] = useState(false);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [cookieBannerOpen, setCookieBannerOpen] = useState(false);
+  const [passcodeModalOpen, setPasscodeModalOpen] = useState(false);
+
+  // Global Cmd+K / Ctrl+K keyboard shortcut for Site Search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setSearchModalOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleOpenStoragePreferences = () => {
-    setStorageModalOpen(true);
+    setCookieBannerOpen(true);
   };
 
   const handleClearPreferences = () => {
     localStorage.removeItem('pravaha-theme');
     localStorage.removeItem('pravaha-consent');
+    localStorage.removeItem('pravaha-completed-lessons');
     sessionStorage.removeItem('pravaha-preloaded');
     sessionStorage.removeItem('pravaha-utm');
     window.location.reload();
@@ -44,9 +64,30 @@ export function App() {
         {/* 1.2s Tactical Preloader */}
         <Preloader />
 
+        {/* Floating Tools: Scroll progress bar and back-to-top */}
+        <FloatingTools />
+
+        {/* Site Search Modal (Cmd/Ctrl+K) */}
+        <SiteSearchModal
+          isOpen={searchModalOpen}
+          onClose={() => setSearchModalOpen(false)}
+        />
+
+        {/* Operator Passcode Area Modal */}
+        <PasscodeModal
+          isOpen={passcodeModalOpen}
+          onClose={() => setPasscodeModalOpen(false)}
+        />
+
+        {/* Cookie & Local Storage Banner */}
+        <CookieBanner
+          isOpenOverride={cookieBannerOpen}
+          onCloseOverride={() => setCookieBannerOpen(false)}
+        />
+
         <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 transition-colors">
           {/* Main Navigation Header */}
-          <Header />
+          <Header onOpenSearch={() => setSearchModalOpen(true)} />
 
           {/* Page Routing Container */}
           <main id="main-content" className="flex-1">
@@ -67,7 +108,10 @@ export function App() {
           </main>
 
           {/* Infrastructure Footer */}
-          <Footer onOpenStoragePreferences={handleOpenStoragePreferences} />
+          <Footer
+            onOpenStoragePreferences={handleOpenStoragePreferences}
+            onOpenOperatorPasscode={() => setPasscodeModalOpen(true)}
+          />
 
           {/* Storage & Cookie Preferences Modal */}
           <ConfirmationModal
