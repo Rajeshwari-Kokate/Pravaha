@@ -26,6 +26,53 @@ def verify_operator_passcode(provided: str) -> bool:
     return hmac.compare_digest(provided.encode("utf-8"), ADMIN_PASSCODE.encode("utf-8"))
 
 
+def _init_db_schema() -> None:
+    """Ensure all core tables exist so fresh environments or stats queries never fail."""
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    con = sqlite3.connect(DB_PATH)
+    con.executescript("""
+        CREATE TABLE IF NOT EXISTS simulation_runs (
+            run_id       TEXT PRIMARY KEY,
+            scenario     TEXT NOT NULL,
+            return_period TEXT NOT NULL,
+            intensity_mm_hr REAL NOT NULL,
+            overloaded   INTEGER NOT NULL,
+            max_flow_ratio REAL NOT NULL,
+            created_at   TEXT NOT NULL,
+            payload      TEXT NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS investigation_reports (
+            report_id TEXT PRIMARY KEY,
+            run_id TEXT NOT NULL,
+            scenario_name TEXT NOT NULL,
+            generated_at TEXT NOT NULL,
+            generated_by_model TEXT NOT NULL,
+            is_fallback INTEGER NOT NULL,
+            payload_json TEXT NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS contact_submissions (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            message TEXT NOT NULL,
+            submitted_at TEXT NOT NULL,
+            client_ip TEXT
+        );
+    """)
+    con.commit()
+    con.close()
+
+
+_init_db_schema()
+
+
+def _safe_count(con: sqlite3.Connection, table_name: str) -> int:
+    try:
+        return con.execute(f"SELECT count(*) FROM {table_name}").fetchone()[0]
+    except sqlite3.OperationalError:
+        return 0
+
+
 @router.post("/verify")
 def verify_passcode(req: VerifyRequest) -> Dict[str, Any]:
     if not verify_operator_passcode(req.passcode):
@@ -38,10 +85,14 @@ def list_contact_inquiries(x_operator_passcode: str = Header(default="")) -> Lis
     if not verify_operator_passcode(x_operator_passcode):
         raise HTTPException(status_code=401, detail="Unauthorized operator credentials.")
 
+    _init_db_schema()
     con = sqlite3.connect(DB_PATH)
-    rows = con.execute(
-        "SELECT id, name, email, message, submitted_at, client_ip FROM contact_submissions ORDER BY submitted_at DESC"
-    ).fetchall()
+    try:
+        rows = con.execute(
+            "SELECT id, name, email, message, submitted_at, client_ip FROM contact_submissions ORDER BY submitted_at DESC"
+        ).fetchall()
+    except sqlite3.OperationalError:
+        rows = []
     con.close()
 
     return [
@@ -62,10 +113,11 @@ def get_system_stats(x_operator_passcode: str = Header(default="")) -> Dict[str,
     if not verify_operator_passcode(x_operator_passcode):
         raise HTTPException(status_code=401, detail="Unauthorized operator credentials.")
 
+    _init_db_schema()
     con = sqlite3.connect(DB_PATH)
-    runs_count = con.execute("SELECT count(*) FROM simulation_runs").fetchone()[0]
-    reports_count = con.execute("SELECT count(*) FROM investigation_reports").fetchone()[0]
-    contacts_count = con.execute("SELECT count(*) FROM contact_submissions").fetchone()[0]
+    runs_count = _safe_count(con, "simulation_runs")
+    reports_count = _safe_count(con, "investigation_reports")
+    contacts_count = _safe_count(con, "contact_submissions")
     con.close()
 
     db_size_bytes = os.path.getsize(DB_PATH) if os.path.exists(DB_PATH) else 0
@@ -77,3 +129,4 @@ def get_system_stats(x_operator_passcode: str = Header(default="")) -> Dict[str,
         "total_reports": reports_count,
         "total_inquiries": contacts_count,
     }
+
