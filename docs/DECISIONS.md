@@ -35,3 +35,8 @@ This log records technical, architectural, and design decisions made during the 
 ## Decision 7: Elimination of Em Dashes
 - Context: SECTION 2 prohibits em dashes anywhere in website copy, README, or documentation.
 - Decision: Audited all generated copy, markdown documentation, and docstrings to enforce standard colons, commas, semicolons, and periods.
+
+## Decision 8: Automated Verification and Headless Driver Handling
+- Context: During Phase 1 browser verification, the system browser daemon reported a driver timeout on `open_browser_url`.
+- Decision: The Vite development server was validated directly via HTTP request (`HTTP/1.1 200 OK`), TypeScript compilation was verified with strict compiler flags (`tsc -b`), and the production bundle was built and verified (`vite build`). As agreed with the operator, headless and curl automated testing will verify web endpoints alongside automated unit test suites.
+
