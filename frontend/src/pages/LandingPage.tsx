@@ -1,6 +1,9 @@
 import { type FC } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Layers, BookOpen, Sliders, ShieldAlert, Cpu, Activity } from 'lucide-react';
+import { ArrowRight, Layers, BookOpen, Activity, ShieldAlert } from 'lucide-react';
+import { RainCordHero } from '../components/home/RainCordHero';
+import { WorkflowRollingCards } from '../components/home/WorkflowRollingCards';
+import { FaqSection } from '../components/home/FaqSection';
 
 export const LandingPage: FC = () => {
   return (
@@ -42,80 +45,19 @@ export const LandingPage: FC = () => {
         </div>
       </section>
 
-      {/* Hero Interactive Map Placeholder (Detailed interactive map cord implemented in Phase 9) */}
+      {/* Interactive Rain Cord Hero */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="border border-slate-200 dark:border-slate-800 rounded-md bg-white dark:bg-slate-900 p-6 shadow-sm">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
-            <div>
-              <span className="font-mono text-[11px] uppercase tracking-wider text-teal-600 dark:text-teal-400 font-bold">
-                Demonstration Study Area
-              </span>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-                Koramangala Catchment Demonstration Network
-              </h2>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-mono">
-              <span className="inline-block w-2.5 h-2.5 rounded-full bg-teal-500"></span>
-              <span>Synthetic Drainage Model (Seed 42)</span>
-            </div>
-          </div>
-          <div className="py-12 text-center text-xs text-slate-500 dark:text-slate-400">
-            Interactive demonstration network preview with rain cord simulator loads in workspace and educational views.
-          </div>
-        </div>
+        <RainCordHero />
       </section>
 
-      {/* Three Workflow Cards: Rolling container in Phase 9 */}
+      {/* Three Workflow Cards with Rolling Snap */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-6">
-          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400">
-            Engineering Workflow
-          </span>
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
-            Systematic Drainage Investigation Pipeline
-          </h2>
-        </div>
+        <WorkflowRollingCards />
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
-            <div className="w-10 h-10 rounded-md bg-teal-50 dark:bg-teal-950/60 border border-teal-200 dark:border-teal-800 flex items-center justify-center text-teal-600 dark:text-teal-400">
-              <Sliders className="w-5 h-5" />
-            </div>
-            <span className="font-mono text-[11px] text-teal-600 dark:text-teal-400 font-semibold uppercase tracking-wider">
-              Step 01
-            </span>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Configure Scenario</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              Define design rainfall intensity (mm/h), storm hyetograph distribution, antecedent moisture conditions, and conduit obstruction factors across the urban network.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
-            <div className="w-10 h-10 rounded-md bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 flex items-center justify-center text-sky-600 dark:text-sky-400">
-              <Cpu className="w-5 h-5" />
-            </div>
-            <span className="font-mono text-[11px] text-sky-600 dark:text-sky-400 font-semibold uppercase tracking-wider">
-              Step 02
-            </span>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Run Simulation</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              Execute deterministic topological flow routing via the Rational Method. Step through simulated time horizons to examine progressive conduit exceedance and hotspot emergence.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
-            <div className="w-10 h-10 rounded-md bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-              <Layers className="w-5 h-5" />
-            </div>
-            <span className="font-mono text-[11px] text-indigo-600 dark:text-indigo-400 font-semibold uppercase tracking-wider">
-              Step 03
-            </span>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Investigate & Compare</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              Identify candidate bottlenecks, inspect affected road corridors and civic assets, test remediation interventions, and formulate evidence-grounded technical reports.
-            </p>
-          </div>
-        </div>
+      {/* Frequently Asked Questions */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <FaqSection />
       </section>
 
       {/* Limitations and Integrity Notice */}
