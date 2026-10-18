@@ -1,10 +1,12 @@
 import { useState, type FC } from 'react';
-import { AlertTriangle, Eye, EyeOff } from 'lucide-react';
+import { AlertTriangle, Eye, EyeOff, Activity, Table, Database } from 'lucide-react';
 import { MapLibreView, type SelectedFeature } from '../components/map/MapLibreView';
 import { FeatureDetailPanel } from '../components/workspace/FeatureDetailPanel';
 import { KpiCards } from '../components/workspace/KpiCards';
 import { TimelineScrubber } from '../components/workspace/TimelineScrubber';
 import { SimulationControls } from '../components/workspace/SimulationControls';
+import { ConduitResultsTable } from '../components/workspace/ConduitResultsTable';
+import { RegionalFactorsView } from '../components/workspace/RegionalFactorsView';
 import { useSimulation } from '../hooks/useSimulation';
 
 export const WorkspacePage: FC = () => {
@@ -17,6 +19,7 @@ export const WorkspacePage: FC = () => {
 
   const [selectedFeature, setSelectedFeature] = useState<SelectedFeature | null>(null);
   const [leftPanelTab, setLeftPanelTab]       = useState<'layers' | 'controls'>('controls');
+  const [bottomTab, setBottomTab]             = useState<'timeline' | 'table' | 'regional'>('timeline');
 
   const toggleLayer = (layerKey: keyof typeof layersVisibility) => {
     setLayersVisibility(prev => ({ ...prev, [layerKey]: !prev[layerKey] }));
@@ -171,29 +174,101 @@ export const WorkspacePage: FC = () => {
         </div>
       </div>
 
-      {/* Bottom: KPI + Timeline */}
-      <div className="shrink-0 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 z-30">
-        {/* KPI Strip */}
-        <div className="px-4 pt-3 pb-2">
-          <KpiCards
-            result={sim.result}
-            isLoading={sim.isLoading}
-            totalConduits={totalConduits}
-          />
+      {/* Bottom Drawer with Tabs */}
+      <div className="shrink-0 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 z-30 flex flex-col">
+        {/* Tab switcher */}
+        <div className="flex items-center gap-2 px-4 py-1.5 border-b border-slate-100 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-900/60 text-xs">
+          <button
+            type="button"
+            onClick={() => setBottomTab('timeline')}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded text-xs font-semibold transition-colors ${
+              bottomTab === 'timeline'
+                ? 'bg-white dark:bg-slate-800 text-teal-600 dark:text-teal-400 shadow-sm border border-slate-200 dark:border-slate-700'
+                : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Activity className="w-3.5 h-3.5" />
+            <span>Timeline & KPIs</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setBottomTab('table')}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded text-xs font-semibold transition-colors ${
+              bottomTab === 'table'
+                ? 'bg-white dark:bg-slate-800 text-teal-600 dark:text-teal-400 shadow-sm border border-slate-200 dark:border-slate-700'
+                : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Table className="w-3.5 h-3.5" />
+            <span>Asset Table & CSV</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setBottomTab('regional')}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded text-xs font-semibold transition-colors ${
+              bottomTab === 'regional'
+                ? 'bg-white dark:bg-slate-800 text-teal-600 dark:text-teal-400 shadow-sm border border-slate-200 dark:border-slate-700'
+                : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Database className="w-3.5 h-3.5" />
+            <span>Regional Factors (Dataset ML)</span>
+          </button>
         </div>
 
-        {/* Timeline scrubber */}
-        <div className="px-4 pb-3 border-t border-slate-100 dark:border-slate-800 pt-2">
-          <TimelineScrubber
-            result={sim.result}
-            activeStep={sim.activeStep}
-            isPlaying={sim.isPlaying}
-            onPlay={sim.play}
-            onPause={sim.pause}
-            onReset={sim.reset}
-            onSeek={sim.seekStep}
-          />
-        </div>
+        {/* Tab 1: Timeline & KPIs */}
+        {bottomTab === 'timeline' && (
+          <div className="flex flex-col">
+            <div className="px-4 pt-3 pb-2">
+              <KpiCards
+                result={sim.result}
+                isLoading={sim.isLoading}
+                totalConduits={totalConduits}
+              />
+            </div>
+            <div className="px-4 pb-3 border-t border-slate-100 dark:border-slate-800 pt-2">
+              <TimelineScrubber
+                result={sim.result}
+                activeStep={sim.activeStep}
+                isPlaying={sim.isPlaying}
+                onPlay={sim.play}
+                onPause={sim.pause}
+                onReset={sim.reset}
+                onSeek={sim.seekStep}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Tab 2: Sortable Asset / Conduit Table */}
+        {bottomTab === 'table' && (
+          <div className="p-4 max-h-72 overflow-y-auto">
+            <ConduitResultsTable
+              result={sim.result}
+              selectedId={selectedFeature?.id}
+              onSelectId={(id) => {
+                const conduit = sim.result?.conduitResults.find(c => c.conduitId === id);
+                if (conduit) {
+                  setSelectedFeature({
+                    id: conduit.conduitId,
+                    type: 'drainage',
+                    name: `Conduit ${conduit.conduitId}`,
+                    properties: { ...conduit },
+                  });
+                }
+              }}
+            />
+          </div>
+        )}
+
+        {/* Tab 3: Regional Factors View */}
+        {bottomTab === 'regional' && (
+          <div className="p-4 max-h-80 overflow-y-auto">
+            <RegionalFactorsView />
+          </div>
+        )}
       </div>
     </div>
   );

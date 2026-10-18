@@ -70,18 +70,92 @@ export const MethodologyPage: FC = () => {
             3. Dataset & Model Card (flood_risk_dataset_india.csv)
           </h2>
         </div>
-        <div className="p-4 rounded-md border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">
-              Tabular Susceptibility Model Profile
-            </span>
-            <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+        <div className="p-5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div>
+              <span className="font-mono text-sm font-bold text-slate-900 dark:text-white block">
+                Supervised Susceptibility Model Evaluation Card
+              </span>
+              <span className="text-xs text-slate-500">
+                Trained on 10,000 tabular observations with 80/20 stratified train/test split.
+              </span>
+            </div>
+            <span className="font-mono text-[11px] px-2.5 py-1 rounded bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 self-start sm:self-auto">
               Origin and Licence Unverified
             </span>
           </div>
-          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            A supervised classifier is trained on held-out tabular splits (80/20 train/test) to evaluate statistical associations with recorded historical flood flags. Detailed classification metrics (ROC AUC, Precision, Recall, F1, Confusion Matrix) are computed from real held-out data in Phase 7.
-          </p>
+
+          {/* Performance Benchmark Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+            <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span className="text-[10px] text-slate-500 uppercase block">Logistic Reg. ROC AUC</span>
+              <span className="text-xl font-black text-slate-900 dark:text-white">0.4982</span>
+              <span className="text-[10px] text-slate-400 block mt-0.5">Chance level (~0.50)</span>
+            </div>
+            <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span className="text-[10px] text-slate-500 uppercase block">GBDT ROC AUC</span>
+              <span className="text-xl font-black text-slate-900 dark:text-white">0.4921</span>
+              <span className="text-[10px] text-slate-400 block mt-0.5">Non-linear trees</span>
+            </div>
+            <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span className="text-[10px] text-slate-500 uppercase block">Held-Out Test Set</span>
+              <span className="text-xl font-black text-slate-900 dark:text-white">2,000</span>
+              <span className="text-[10px] text-slate-400 block mt-0.5">Stratified evaluation</span>
+            </div>
+            <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span className="text-[10px] text-slate-500 uppercase block">Target Class Balance</span>
+              <span className="text-xl font-black text-slate-900 dark:text-white">50.6%</span>
+              <span className="text-[10px] text-slate-400 block mt-0.5">5,057 vs 4,943</span>
+            </div>
+          </div>
+
+          {/* Confusion Matrix Table */}
+          <div className="space-y-2 pt-2">
+            <h3 className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono">
+              Held-Out Confusion Matrix (Logistic Regression, 20% split)
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs text-center border border-slate-200 dark:border-slate-700 font-mono">
+                <thead>
+                  <tr className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                    <th className="p-2 border border-slate-200 dark:border-slate-700 text-left font-sans">Ground Truth \ Predicted</th>
+                    <th className="p-2 border border-slate-200 dark:border-slate-700">Predicted No Flood (0)</th>
+                    <th className="p-2 border border-slate-200 dark:border-slate-700">Predicted Flood (1)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="p-2 border border-slate-200 dark:border-slate-700 text-left font-semibold">Actual No Flood (0)</td>
+                    <td className="p-2 border border-slate-200 dark:border-slate-700 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold">540 (TN)</td>
+                    <td className="p-2 border border-slate-200 dark:border-slate-700 bg-rose-500/10 text-rose-700 dark:text-rose-400">449 (FP)</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 border border-slate-200 dark:border-slate-700 text-left font-semibold">Actual Flood (1)</td>
+                    <td className="p-2 border border-slate-200 dark:border-slate-700 bg-rose-500/10 text-rose-700 dark:text-rose-400">555 (FN)</td>
+                    <td className="p-2 border border-slate-200 dark:border-slate-700 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold">456 (TP)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Synthetic Indicators & Scientific Caveats */}
+          <div className="p-3.5 rounded bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900 text-xs space-y-2 text-slate-700 dark:text-slate-300">
+            <span className="font-bold text-amber-800 dark:text-amber-400 block">
+              Methodological Findings & Caveats
+            </span>
+            <ul className="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
+              <li>
+                <strong>Synthetic distribution characteristics:</strong> The dataset exhibits near-uniform distributions across environmental continuous variables (e.g. Rainfall mean 150.0mm ±86.5) and equal proportions across categorical soil/land-cover types.
+              </li>
+              <li>
+                <strong>Absence of physical correlation:</strong> Both linear and tree-based ensembles confirm near-zero correlation between input features and target labels (ROC AUC = ~0.49-0.50).
+              </li>
+              <li>
+                <strong>Operational boundaries:</strong> Machine learning scores derived from this file are intended solely for sensitivity exploration and transparency demonstrations, not physical risk delineation. Engineering calculations in PRAVAHA utilize deterministic hydraulic formulas.
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 

@@ -5,12 +5,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .routers.simulation import router as simulation_router
+from .routers.dataset import router as dataset_router
 
 app = FastAPI(
     title="Pravaha Flood Intelligence API",
-    version="0.4.0",
+    version="0.7.0",
     description=(
-        "Deterministic flood routing simulation for Koramangala, Bengaluru. "
+        "Deterministic flood routing simulation and ML susceptibility analysis for Koramangala, Bengaluru. "
         "Dataset origin and licence unverified."
     ),
     docs_url="/api/docs",
@@ -26,6 +27,7 @@ app.add_middleware(
 )
 
 app.include_router(simulation_router)
+app.include_router(dataset_router)
 
 
 @app.get("/api/health")

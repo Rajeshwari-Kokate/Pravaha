@@ -1,0 +1,175 @@
+{
+  "dataset_overview": {
+    "total_samples": 10000,
+    "train_samples": 8000,
+    "test_samples": 2000,
+    "target_distribution": {
+      "no_flood": 4943,
+      "flood": 5057,
+      "flood_rate": 0.5057
+    },
+    "caveats": [
+      "Empirical evaluation shows near-zero predictive correlation between environmental features and target.",
+      "ROC AUC hovers around 0.50 (+/- 0.02), indicating that flood occurrences in this raw dataset behave as pseudo-random labels.",
+      "Models should be used exclusively for sensitivity demonstration and benchmark comparison, NOT actual life-safety flood hazard zoning."
+    ]
+  },
+  "models": {
+    "logistic_regression": {
+      "model_name": "Logistic Regression",
+      "roc_auc": 0.4982,
+      "f1_score": 0.5457,
+      "precision": 0.5072,
+      "recall": 0.5905,
+      "accuracy": 0.503,
+      "confusion_matrix": {
+        "tn": 409,
+        "fp": 580,
+        "fn": 414,
+        "tp": 597
+      },
+      "calibration_curve": {
+        "prob_true": [
+          0.5055
+        ],
+        "prob_pred": [
+          0.5061
+        ]
+      }
+    },
+    "gradient_boosted_trees": {
+      "model_name": "Gradient Boosted Trees",
+      "roc_auc": 0.4921,
+      "f1_score": 0.5284,
+      "precision": 0.4927,
+      "recall": 0.5697,
+      "accuracy": 0.486,
+      "confusion_matrix": {
+        "tn": 396,
+        "fp": 593,
+        "fn": 435,
+        "tp": 576
+      },
+      "calibration_curve": {
+        "prob_true": [
+          0.3333,
+          0.5412,
+          0.5056,
+          0.4792,
+          0.0
+        ],
+        "prob_pred": [
+          0.1765,
+          0.3473,
+          0.5081,
+          0.6477,
+          0.8173
+        ]
+      }
+    }
+  },
+  "feature_attributions": [
+    {
+      "feature": "Land Cover_Water Body",
+      "logistic_coefficient": -0.2068,
+      "gbdt_importance": 0.0105,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Soil Type_Loam",
+      "logistic_coefficient": -0.0997,
+      "gbdt_importance": 0.0056,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Land Cover_Forest",
+      "logistic_coefficient": -0.0978,
+      "gbdt_importance": 0.0,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Land Cover_Desert",
+      "logistic_coefficient": -0.0735,
+      "gbdt_importance": 0.0,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Humidity (%)",
+      "logistic_coefficient": 0.061,
+      "gbdt_importance": 0.1256,
+      "relative_impact": "positive"
+    },
+    {
+      "feature": "Land Cover_Urban",
+      "logistic_coefficient": -0.057,
+      "gbdt_importance": 0.0041,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Soil Type_Silt",
+      "logistic_coefficient": -0.0556,
+      "gbdt_importance": 0.0,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Historical Floods",
+      "logistic_coefficient": 0.0383,
+      "gbdt_importance": 0.0186,
+      "relative_impact": "positive"
+    },
+    {
+      "feature": "Temperature (\u00b0C)",
+      "logistic_coefficient": -0.0298,
+      "gbdt_importance": 0.178,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Elevation (m)",
+      "logistic_coefficient": -0.022,
+      "gbdt_importance": 0.093,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Water Level (m)",
+      "logistic_coefficient": -0.0219,
+      "gbdt_importance": 0.1501,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Soil Type_Sandy",
+      "logistic_coefficient": -0.0208,
+      "gbdt_importance": 0.0014,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Infrastructure",
+      "logistic_coefficient": -0.0151,
+      "gbdt_importance": 0.0077,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Rainfall (mm)",
+      "logistic_coefficient": -0.0104,
+      "gbdt_importance": 0.1104,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Soil Type_Peat",
+      "logistic_coefficient": -0.0099,
+      "gbdt_importance": 0.0012,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "River Discharge (m\u00b3/s)",
+      "logistic_coefficient": -0.0097,
+      "gbdt_importance": 0.1711,
+      "relative_impact": "negative"
+    },
+    {
+      "feature": "Population Density",
+      "logistic_coefficient": -0.0048,
+      "gbdt_importance": 0.1229,
+      "relative_impact": "negative"
+    }
+  ]
+}
