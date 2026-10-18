@@ -25,3 +25,10 @@ RAINFALL_PRESETS = {
     "50yr": 100.0,
     "100yr":135.0,
 }
+
+# Gemma 4 LLM Inference Settings (OpenAI-compatible HTTP endpoint)
+import os
+GEMMA_BASE_URL        = os.getenv("GEMMA_BASE_URL", "http://localhost:11434/v1")
+GEMMA_MODEL           = os.getenv("GEMMA_MODEL", "google/gemma-4-E4B-it")
+GEMMA_API_KEY         = os.getenv("GEMMA_API_KEY", "")
+GEMMA_TIMEOUT_SECONDS = int(os.getenv("GEMMA_TIMEOUT_SECONDS", "30"))
