@@ -52,6 +52,8 @@ This log records technical, architectural, and design decisions made during the 
 ## Decision 11: Test Path Resolution
 
 - Context: `test_data_integrity.py` used CWD-relative paths, causing failures when pytest is invoked from `backend/` rather than the repo root.
-- Decision: All test files now derive the repo root from `Path(__file__).resolve().parents[N]`, making them working-directory independent.
-- Rationale: Reproducible CI regardless of invocation directory.
+## Decision 12: Interface Redesign Protocol & Custom Cursor Elimination
+- Context: Master redesign prompt requested a warm, tactile, friendly engineering interface based on the provided dashboard mockup and Color Hunt palette (pink, cream, sage-300, sage-500, ink, water, amber, critical). Also required complete elimination of custom cursor.
+- Decision: Removed `SiteCursor.tsx` and all listeners/DOM wrappers. Adopted native browser cursors exclusively. Established unified CSS custom properties and Tailwind tokens for light and dark themes with WCAG AA compliance. Baseline before-screenshots captured across all 10 routes in `docs/redesign/before/`.
+- Rationale: Native cursors eliminate pointer lag, improve accessibility, and align with engineering software expectations.
 

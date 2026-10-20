@@ -4,7 +4,6 @@ import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
 import { Preloader } from './components/common/Preloader';
-import { SiteCursor } from './components/common/SiteCursor';
 import { ConfirmationModal } from './components/common/ConfirmationModal';
 import { SiteSearchModal } from './components/common/SiteSearchModal';
 import { CookieBanner } from './components/common/CookieBanner';
@@ -58,9 +57,6 @@ export function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        {/* Subtle Custom Cursor for main interface */}
-        <SiteCursor />
-
         {/* 1.2s Tactical Preloader */}
         <Preloader />
 
