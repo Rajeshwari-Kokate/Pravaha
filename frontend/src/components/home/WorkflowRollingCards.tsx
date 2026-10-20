@@ -1,155 +1,89 @@
-import { useRef, type FC } from 'react';
-import { Sliders, Cpu, GitCompare, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { type FC } from 'react';
+import { Sliders, MapPin, GitBranch, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-interface WorkflowStep {
-  step: string;
-  title: string;
-  description: string;
-  actionText: string;
-  actionLink: string;
+interface WorkflowItem {
   icon: typeof Sliders;
-  details: string[];
+  title: string;
+  sentence: string;
+  link: string;
+  actionText: string;
+  tag: string;
 }
 
-const WORKFLOW_STEPS: WorkflowStep[] = [
+const WORKFLOW_ITEMS: WorkflowItem[] = [
   {
-    step: '01',
-    title: 'Configure Storm Scenario',
-    description: 'Select recurrence presets (5yr to 100yr) or dial custom rainfall intensities. Adjust antecedent moisture and simulate segment debris blockages.',
-    actionText: 'Explore Scenarios Lab',
-    actionLink: '/scenarios',
     icon: Sliders,
-    details: [
-      '5 standard return periods (30 to 135 mm/h)',
-      'Segment-level blockage factor injections (0-80%)',
-      'Instant parameter assumption validation preview',
-    ],
+    title: 'Analyse scenarios',
+    sentence: 'Simulate rainfall and drainage conditions for your area of interest.',
+    link: '/scenarios',
+    actionText: 'Open scenario lab',
+    tag: 'Step 1',
   },
   {
-    step: '02',
-    title: 'Execute Hydraulic Simulation',
-    description: 'Topological propagation routes hydrograph timesteps along the Koramangala network graph, detecting capacity exceedance and affected road intersections.',
-    actionText: 'Open Flood Workspace',
-    actionLink: '/workspace',
-    icon: Cpu,
-    details: [
-      'Deterministic Rational Method (Q = C·i·A / 360)',
-      '12-step triangular hyetograph timeline progression',
-      'Dynamic spatial hotspot polygon clustering',
-    ],
+    icon: MapPin,
+    title: 'Identify risk areas',
+    sentence: 'Locate potential accumulation hotspots and affected infrastructure.',
+    link: '/workspace',
+    actionText: 'Inspect risk map',
+    tag: 'Step 2',
   },
   {
-    step: '03',
-    title: 'Investigate Bottlenecks & Compare',
-    description: 'Analyze multi-factor bottleneck rankings with custom weight sliders. Model engineering interventions (desilting vs widening) with live delta metrics.',
-    actionText: 'View Bottleneck Lab',
-    actionLink: '/bottleneck',
-    icon: GitCompare,
-    details: [
-      '5 user-exposed factor weights for transparent scoring',
-      'Simulate hydraulic desilting or bypass channels',
-      'Side-by-side KPI diffing and per-conduit deltas',
-    ],
+    icon: GitBranch,
+    title: 'Plan informed actions',
+    sentence: 'Compare interventions and understand their potential impact.',
+    link: '/bottleneck',
+    actionText: 'View bottleneck priorities',
+    tag: 'Step 3',
   },
 ];
 
 export const WorkflowRollingCards: FC = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const offset = direction === 'left' ? -380 : 380;
-      scrollRef.current.scrollBy({ left: offset, behavior: 'smooth' });
-    }
-  };
-
   return (
-    <section className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400">
-            Systematic Methodology
-          </span>
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
-            Three-Stage Flood Investigation Pipeline
-          </h2>
-        </div>
-
-        {/* Scroll Controls */}
-        <div className="flex items-center gap-2 self-end sm:self-auto">
-          <button
-            type="button"
-            onClick={() => scroll('left')}
-            className="p-2 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
-            aria-label="Previous workflow step"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            type="button"
-            onClick={() => scroll('right')}
-            className="p-2 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
-            aria-label="Next workflow step"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
+    <section className="space-y-4">
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#4F6B52] dark:text-[#B8CFB3]">
+          Investigation Workflow
+        </span>
+        <span className="text-xs text-[#55655B] dark:text-[#B9C7BD]">
+          Three-phase engineering screening
+        </span>
       </div>
 
-      {/* Horizontally Rolling Container with Scroll-Snap */}
-      <div
-        ref={scrollRef}
-        className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-lg"
-        tabIndex={0}
-        role="region"
-        aria-label="Workflow cards carousel"
-      >
-        {WORKFLOW_STEPS.map(step => {
-          const Icon = step.icon;
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {WORKFLOW_ITEMS.map((item, idx) => {
+          const Icon = item.icon;
           return (
             <div
-              key={step.step}
-              className="w-[320px] sm:w-[380px] shrink-0 snap-start rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow"
+              key={idx}
+              className="p-6 rounded-2xl border-[1.5px] border-[#24302A] dark:border-[#3A4A40] bg-white dark:bg-[#25312A] shadow-[3px_3px_0px_#24302A] dark:shadow-[3px_3px_0px_#0E1410] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[4px_4px_0px_#24302A] dark:hover:shadow-[4px_4px_0px_#0E1410] transition-all flex flex-col justify-between"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
-                    STAGE {step.step}
+                  <div className="p-2.5 rounded-xl border border-[#24302A] bg-[#FEFAF3] dark:bg-[#1C2620] text-[#24302A] dark:text-[#FEFAF3] shadow-[1px_1px_0px_#24302A]">
+                    <Icon className="w-5 h-5 text-[#4F6B52] dark:text-[#B8CFB3]" />
+                  </div>
+                  <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded-[4px] border border-[#24302A] bg-[#F6E2E9] text-[#24302A]">
+                    {item.tag}
                   </span>
-                  <Icon className="w-5 h-5 text-teal-600 dark:text-teal-400" />
                 </div>
 
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                    {step.title}
+                <div className="space-y-1.5">
+                  <h3 className="text-lg font-bold font-heading text-[#24302A] dark:text-[#FEFAF3]">
+                    {item.title}
                   </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mt-2">
-                    {step.description}
+                  <p className="text-xs text-[#55655B] dark:text-[#B9C7BD] leading-relaxed">
+                    {item.sentence}
                   </p>
-                </div>
-
-                <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase font-semibold block mb-2">
-                    Key Capabilities
-                  </span>
-                  <ul className="text-xs space-y-1.5 text-slate-600 dark:text-slate-400">
-                    {step.details.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-1.5">
-                        <span className="text-teal-500 font-bold">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </div>
 
               <div className="pt-6">
                 <Link
-                  to={step.actionLink}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300"
+                  to={item.link}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#24302A] dark:text-[#FEFAF3] hover:text-[#4F6B52] dark:hover:text-[#B8CFB3] hover:underline transition-colors"
                 >
-                  <span>{step.actionText}</span>
+                  <span>{item.actionText}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>

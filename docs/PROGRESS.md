@@ -19,12 +19,13 @@
   - [x] Brand mark recolored to new palette
   - [x] Search modal and storage preference banner restyled
 
-NEXT STEP: R3 Landing Page (/)
+- [x] **R3: Landing Page (/)**
+  - [x] New hero with real interactive MapLibre map of demonstration network
+  - [x] Workflow row ("Analyse scenarios", "Identify risk areas", "Plan informed actions")
+  - [x] Methodology summary, limitations, FAQ, preloader recolored
 
-- [ ] **R3: Landing Page (/)**
-  - [ ] New hero with real interactive MapLibre map of demonstration network
-  - [ ] Workflow row ("Analyse scenarios", "Identify risk areas", "Plan informed actions")
-  - [ ] Methodology summary, limitations, FAQ, preloader recolored
+NEXT STEP: R4 Workspace (/workspace)
+
 - [ ] **R4: Workspace (/workspace)**
   - [ ] Layout with slim sidebar, top bar, demo area label
   - [ ] Map overlay: "Layers" panel
