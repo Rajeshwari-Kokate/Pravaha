@@ -209,11 +209,11 @@ curl http://localhost:8000/api/health
 
 ## Accessibility & Engineering Standards
 
-- **WCAG AA Compliance**: High-contrast slate/teal palette with minimum 4.5:1 text contrast.
+- **WCAG AA Compliance**: Tactile engineering palette (cream, sage-300, sage-500, ink, pink) with verified 4.5:1+ contrast across all text and background pairs in both light and dark themes.
 - **Full Keyboard Navigation**: Visible focus rings (`focus-visible:ring-2`), logical tab index sequence, and Escape key listeners for all modals.
 - **Skip-to-Content Link**: Primary landmark navigation support for screen readers.
-- **Reduced Motion Support**: Automatic suppression of animations and decorative cursor via `@media (prefers-reduced-motion: reduce)`.
-- **Responsive Layout**: Fluid breakpoints covering mobile ($<640\text{px}$), tablet ($768\text{px}$), and desktop ($1024\text{px}+$ viewports.
+- **Reduced Motion Support**: Automatic suppression of animations via `@media (prefers-reduced-motion: reduce)`. Native cursors only.
+- **Responsive Layout**: Fluid breakpoints covering mobile (390px), tablet (768px/1024px), and desktop (1440px) viewports.
 
 ---
 
