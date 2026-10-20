@@ -5,7 +5,7 @@
  * floating Layers panel, Simulation Controls card, Feature details drawer,
  * and bottom Simulation Results summary.
  */
-import { useState, type FC } from 'react';
+import { useState, useEffect, type FC } from 'react';
 import { Sliders } from 'lucide-react';
 import { MapLibreView, type SelectedFeature } from '../components/map/MapLibreView';
 import { WorkspaceSidebar } from '../components/workspace/WorkspaceSidebar';
@@ -16,6 +16,7 @@ import { SimulationResultsPanel } from '../components/workspace/SimulationResult
 import { FeatureDetailPanel } from '../components/workspace/FeatureDetailPanel';
 import { WorkspaceSettingsModal } from '../components/workspace/WorkspaceSettingsModal';
 import { WorkspaceHelpModal } from '../components/workspace/WorkspaceHelpModal';
+import { GuidedTour } from '../components/workspace/GuidedTour';
 import { useSimulation } from '../hooks/useSimulation';
 
 export const WorkspacePage: FC = () => {
@@ -29,9 +30,21 @@ export const WorkspacePage: FC = () => {
   const [selectedFeature, setSelectedFeature] = useState<SelectedFeature | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [tourOpen, setTourOpen] = useState(false);
   const [rainEffectEnabled, setRainEffectEnabled] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileControlsOpen, setMobileControlsOpen] = useState(false);
+
+  useEffect(() => {
+    try {
+      const dismissed = localStorage.getItem('pravaha-tour-dismissed');
+      if (!dismissed) {
+        setTourOpen(true);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
 
   const toggleLayer = (layerKey: keyof typeof layersVisibility) => {
     setLayersVisibility(prev => ({ ...prev, [layerKey]: !prev[layerKey] }));
@@ -154,8 +167,15 @@ export const WorkspacePage: FC = () => {
         onClose={() => setHelpOpen(false)}
         onRestartTour={() => {
           localStorage.removeItem('pravaha-tour-dismissed');
-          window.location.reload();
+          setHelpOpen(false);
+          setTourOpen(true);
         }}
+      />
+
+      {/* 5-Step Guided Tour */}
+      <GuidedTour
+        isOpen={tourOpen}
+        onClose={() => setTourOpen(false)}
       />
     </div>
   );

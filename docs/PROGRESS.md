@@ -40,12 +40,13 @@
   - [x] Methodology page (`/methodology`) with sub-navigation and genuine data provenance table
   - [x] Learn, Contact, Privacy, Terms, 404 pages restyled
 
-NEXT STEP: R7 Playful, Useful Interactions & Polish
-- [ ] **R7: Playful, Useful Interactions & Polish**
-  - [ ] Guided tour (5 steps, skippable, localStorage)
-  - [ ] Empty and loading SVG states
-  - [ ] Honest celebration stamp on scenario comparison
-  - [ ] Flood school lesson completion stamps
+- [x] **R7: Playful, Useful Interactions & Polish**
+  - [x] Guided tour (5 steps, skippable, localStorage)
+  - [x] Empty and loading SVG states
+  - [x] Honest celebration stamp on scenario comparison
+  - [x] Flood school lesson completion stamps
+
+NEXT STEP: R8 Responsive, Accessibility & Theme Polish
 - [ ] **R8: Responsive, Accessibility & Theme Polish**
   - [ ] Responsive pass at 1440, 1024, 768, 390 px
   - [ ] Keyboard navigation and focus rings

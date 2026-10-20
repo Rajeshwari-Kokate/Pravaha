@@ -5,6 +5,7 @@
 import { type FC, useCallback } from 'react';
 import { Play, Pause, RotateCcw, Clock } from 'lucide-react';
 import type { SimulationOutput } from '../../hooks/useSimulation';
+import { EmptyState } from '../common/EmptyState';
 
 interface TimelineScrubberProps {
   result: SimulationOutput | null;
@@ -43,6 +44,16 @@ export const TimelineScrubber: FC<TimelineScrubberProps> = ({
     },
     [onSeek]
   );
+
+  if (!result || nSteps === 0) {
+    return (
+      <EmptyState
+        type="simulation"
+        title="No simulation timeline yet"
+        description="Pick a storm, press Run, then see which pipes can't keep up."
+      />
+    );
+  }
 
   const active = tl[activeStep];
 

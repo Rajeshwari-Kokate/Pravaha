@@ -6,6 +6,7 @@ import { type FC, useState, useMemo, useCallback } from 'react';
 import { Download, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { exportConduitsCsv } from '../../lib/simulation';
 import type { SimulationOutput } from '../../hooks/useSimulation';
+import { EmptyState } from '../common/EmptyState';
 
 interface Props {
   result: SimulationOutput | null;
@@ -44,6 +45,16 @@ export const ConduitResultsTable: FC<Props> = ({ result, onSelectId, selectedId 
       return sortDir === 'asc' ? cmp : -cmp;
     });
   }, [result, sortKey, sortDir]);
+
+  if (!result || sorted.length === 0) {
+    return (
+      <EmptyState
+        type="pipe"
+        title="No conduit results yet"
+        description="Select a design storm in Simulation Controls and click Run Simulation to compute capacity utilization."
+      />
+    );
+  }
 
   function SortIcon({ col }: { col: SortKey }) {
     if (sortKey !== col) return <ArrowUpDown className="w-3 h-3 text-ink-muted" />;
