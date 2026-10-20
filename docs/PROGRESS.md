@@ -8,12 +8,13 @@
   - [x] Create / update `docs/SPEC.md` pointing design system to `docs/REDESIGN.md` and removing old palette & custom cursor
   - [x] Delete custom cursor component, listeners, styles, tests, and documentation
 
-NEXT STEP: R1 Tokens and base components
-- [ ] **R1: Tokens & Base Components**
-  - [ ] Install self-hosted fonts (`@fontsource/bricolage-grotesque`, `@fontsource/dm-sans`, `@fontsource/jetbrains-mono`)
-  - [ ] Configure CSS variables and Tailwind tokens for brand palette (cream, pink, sage-300, sage-500, etc.) in light & dark themes
-  - [ ] Automated contrast-check script verifying WCAG AA for all text/background pairs
-  - [ ] Base components restyled with 1.5px borders, flat 3px 3px 0 offset shadow, 8px radius buttons, 12-16px card radius, no pill shapes
+- [x] **R1: Tokens & Base Components**
+  - [x] Install self-hosted fonts (`@fontsource/bricolage-grotesque`, `@fontsource/dm-sans`, `@fontsource/jetbrains-mono`)
+  - [x] Configure CSS variables and Tailwind tokens for brand palette (cream, pink, sage-300, sage-500, etc.) in light & dark themes
+  - [x] Automated contrast-check script verifying WCAG AA for all text/background pairs
+  - [x] Base components restyled with 1.5px borders, flat 3px 3px 0 offset shadow, 8px radius buttons, 12-16px card radius, no pill shapes
+
+NEXT STEP: R2 Shell (sidebar, top bar, header, mobile menu, footer, theme toggle)
 - [ ] **R2: Shell**
   - [ ] Slim left sidebar, top bar, header, mobile menu, footer, theme toggle
   - [ ] Brand mark recolored to new palette

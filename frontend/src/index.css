@@ -1,59 +1,81 @@
 @import "tailwindcss";
+@import "@fontsource/bricolage-grotesque/400.css";
+@import "@fontsource/bricolage-grotesque/600.css";
+@import "@fontsource/bricolage-grotesque/700.css";
+@import "@fontsource/dm-sans/400.css";
+@import "@fontsource/dm-sans/500.css";
+@import "@fontsource/dm-sans/600.css";
+@import "@fontsource/dm-sans/700.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
 @import "maplibre-gl/dist/maplibre-gl.css";
+
+@theme {
+  --font-heading: "Bricolage Grotesque", -apple-system, sans-serif;
+  --font-sans: "DM Sans", -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Brand Palette */
+  --color-pink: #F6E2E9;
+  --color-cream: #FEFAF3;
+  --color-sage-300: #B8CFB3;
+  --color-sage-500: #84A282;
+  --color-sage-700: #4F6B52;
+  --color-sage-900: #2F4A38;
+  --color-ink: #24302A;
+  --color-ink-muted: #55655B;
+  --color-water: #3A7F8F;
+  --color-amber: #C98A1B;
+  --color-critical: #B3261E;
+
+  /* Accumulation Scale */
+  --color-ramp-low: #B8CFB3;
+  --color-ramp-mod: #E8C468;
+  --color-ramp-high: #E0803A;
+  --color-ramp-crit: #B3261E;
+}
 
 @layer base {
   :root {
-    --bg-page: #f8fafc;
-    --surface-card: #ffffff;
-    --surface-elevated: #f1f5f9;
-    --border-subtle: #e2e8f0;
-    --border-strong: #cbd5e1;
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #64748b;
-    --brand-teal: #0d9488;
-    --brand-teal-hover: #0f766e;
-    --brand-blue: #0284c7;
-    --brand-blue-hover: #0369a1;
-    --status-warning: #b45309;
-    --status-warning-bg: #fffbeb;
-    --status-warning-border: #fde68a;
-    --status-critical: #b91c1c;
-    --status-critical-bg: #fef2f2;
-    --status-critical-border: #fecaca;
-    --status-ok: #0f766e;
-    --status-ok-bg: #f0fdf4;
-    --status-ok-border: #bbf7d0;
+    --bg-page: #FEFAF3;
+    --surface-card: #FFFFFF;
+    --surface-raised: #FFFFFF;
+    --surface-tint-pink: #F6E2E9;
+    --surface-tint-sage: #B8CFB3;
+    --border-main: #24302A;
+    --border-subtle: #D8E2D5;
+    --text-primary: #24302A;
+    --text-secondary: #55655B;
+    --text-muted: #6C7E73;
+    --brand-primary: #84A282;
+    --brand-accent: #4F6B52;
+    --status-water: #3A7F8F;
+    --status-amber: #C98A1B;
+    --status-critical: #B3261E;
   }
 
   .dark {
-    --bg-page: #090d16;
-    --surface-card: #0f172a;
-    --surface-elevated: #1e293b;
-    --border-subtle: #26334d;
-    --border-strong: #3b4d6b;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
-    --brand-teal: #14b8a6;
-    --brand-teal-hover: #2dd4bf;
-    --brand-blue: #38bdf8;
-    --brand-blue-hover: #7dd3fc;
-    --status-warning: #f59e0b;
-    --status-warning-bg: #2d2008;
-    --status-warning-border: #78350f;
-    --status-critical: #ef4444;
-    --status-critical-bg: #301111;
-    --status-critical-border: #7f1d1d;
-    --status-ok: #10b981;
-    --status-ok-bg: #062817;
-    --status-ok-border: #065f46;
+    --bg-page: #1C2620;
+    --surface-card: #25312A;
+    --surface-raised: #25312A;
+    --surface-tint-pink: rgba(246, 226, 233, 0.12);
+    --surface-tint-sage: rgba(184, 207, 179, 0.15);
+    --border-main: #3A4A40;
+    --border-subtle: #2D3A32;
+    --text-primary: #FEFAF3;
+    --text-secondary: #B9C7BD;
+    --text-muted: #8E9F93;
+    --brand-primary: #84A282;
+    --brand-accent: #B8CFB3;
+    --status-water: #6FC0D0;
+    --status-amber: #E6B04A;
+    --status-critical: #F08A80;
   }
 
   body {
     background-color: var(--bg-page);
     color: var(--text-primary);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-sans);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -61,22 +83,33 @@
     padding: 0;
   }
 
-  /* Focus ring for accessibility */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    letter-spacing: -0.015em;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Accessibility focus ring */
   :focus-visible {
-    outline: 2px solid var(--brand-blue);
+    outline: 2px solid var(--brand-accent);
     outline-offset: 2px;
   }
 
-  /* Skip to content link */
+  /* Accessible Skip to content */
   .skip-to-content {
     position: absolute;
     top: -100px;
     left: 1rem;
-    background: #0284c7;
-    color: #ffffff;
+    background: var(--brand-primary);
+    color: #24302A;
+    border: 2px solid #24302A;
     padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    font-weight: 500;
+    border-radius: 8px;
+    font-weight: 600;
     z-index: 9999;
     transition: top 0.15s ease;
   }
@@ -85,31 +118,107 @@
   }
 }
 
+/* Tactile Design System Utilities */
+.btn-primary {
+  background-color: #84A282;
+  color: #24302A;
+  border: 2px solid #24302A;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 3px 3px 0px #24302A;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 4px 4px 0px #24302A;
+  transform: translate(-1px, -1px);
+}
+.btn-primary:active:not(:disabled) {
+  box-shadow: 1px 1px 0px #24302A;
+  transform: translate(2px, 2px);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-main);
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: 2px 2px 0px var(--border-main);
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+.btn-secondary:hover:not(:disabled) {
+  box-shadow: 3px 3px 0px var(--border-main);
+  transform: translate(-1px, -1px);
+}
+.btn-secondary:active:not(:disabled) {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.card-tactile {
+  background-color: var(--surface-card);
+  border: 1.5px solid var(--border-main);
+  border-radius: 14px;
+  box-shadow: 3px 3px 0px var(--border-main);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-tactile-hover:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px var(--border-main);
+}
+
+.tag-tactile {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-main);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Hatch pattern for Very High accumulation / critical hotspots without color reliance */
+.hatch-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5px,
+    rgba(179, 38, 30, 0.25) 5px,
+    rgba(179, 38, 30, 0.25) 10px
+  );
+}
+
 /* Print styles */
 @media print {
-  nav,
-  header,
-  footer,
-  .no-print,
-  .cookie-banner,
-  .contact-fab,
-  .back-to-top {
+  nav, header, footer, .no-print, .cookie-banner, .contact-fab, .back-to-top {
     display: none !important;
   }
-
   body {
-    background: #ffffff !important;
+    background: #FFFFFF !important;
     color: #000000 !important;
     font-size: 11pt;
   }
-
   .print-page {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
   }
-
   table {
     page-break-inside: avoid;
   }
@@ -121,5 +230,6 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

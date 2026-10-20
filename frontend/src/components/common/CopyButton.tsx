@@ -43,19 +43,19 @@ export const CopyButton: FC<CopyButtonProps> = ({
       type="button"
       onClick={handleCopy}
       aria-label={`${label}: ${copied ? 'Copied' : 'Click to copy'}`}
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 focus-visible:ring-2 focus-visible:ring-sky-500 transition-colors ${className}`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg border-[1.5px] border-[#24302A] dark:border-[#3A4A40] bg-[#FEFAF3] dark:bg-[#25312A] text-[#24302A] dark:text-[#FEFAF3] shadow-[2px_2px_0px_#24302A] dark:shadow-[2px_2px_0px_#0E1410] hover:bg-[#F6E2E9]/60 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer ${className}`}
     >
       {copied ? (
         <>
-          <Check className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" aria-hidden="true" />
-          <span className="text-teal-600 dark:text-teal-400 font-semibold">Copied</span>
+          <Check className="w-3.5 h-3.5 text-[#2F4A38] dark:text-[#B8CFB3]" aria-hidden="true" />
+          <span className="text-[#2F4A38] dark:text-[#B8CFB3] font-bold">Copied</span>
           <span className="sr-only" role="status" aria-live="polite">
             Content copied to clipboard
           </span>
         </>
       ) : (
         <>
-          <Copy className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" aria-hidden="true" />
+          <Copy className="w-3.5 h-3.5 text-[#55655B] dark:text-[#B9C7BD]" aria-hidden="true" />
           <span>{label}</span>
         </>
       )}
