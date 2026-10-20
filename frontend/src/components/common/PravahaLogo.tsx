@@ -22,24 +22,24 @@ export const PravahaLogo: FC<PravahaLogoProps> = ({
         className="shrink-0 transition-transform hover:scale-105"
         aria-hidden="true"
       >
-        <rect width="32" height="32" rx="4" className="fill-slate-900 dark:fill-slate-800" />
+        <rect width="32" height="32" rx="6" fill="#24302A" stroke="#84A282" strokeWidth="1.5" />
         {/* Main conveyance trunk */}
-        <path d="M16 4V28" stroke="#14b8a6" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M16 4V28" stroke="#84A282" strokeWidth="2.5" strokeLinecap="round" />
         {/* Converging lateral collectors */}
-        <path d="M7 11L16 16L25 11" stroke="#38bdf8" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M9 20L16 23L23 20" stroke="#38bdf8" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M7 11L16 16L25 11" stroke="#3A7F8F" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M9 20L16 23L23 20" stroke="#3A7F8F" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
         {/* Manhole / hydraulic junction nodes */}
-        <circle cx="16" cy="16" r="2.2" className="fill-slate-900 dark:fill-slate-800" stroke="#14b8a6" strokeWidth="1.8" />
-        <circle cx="16" cy="23" r="1.8" className="fill-slate-900 dark:fill-slate-800" stroke="#14b8a6" strokeWidth="1.8" />
-        <circle cx="7" cy="11" r="1.5" fill="#38bdf8" />
-        <circle cx="25" cy="11" r="1.5" fill="#38bdf8" />
+        <circle cx="16" cy="16" r="2.2" fill="#24302A" stroke="#B8CFB3" strokeWidth="1.8" />
+        <circle cx="16" cy="23" r="1.8" fill="#24302A" stroke="#B8CFB3" strokeWidth="1.8" />
+        <circle cx="7" cy="11" r="1.5" fill="#3A7F8F" />
+        <circle cx="25" cy="11" r="1.5" fill="#3A7F8F" />
       </svg>
       {showText && (
         <span className="flex flex-col text-left leading-none">
-          <span className="text-base font-bold tracking-wider text-slate-900 dark:text-white uppercase font-mono">
+          <span className="text-base font-bold tracking-wider text-[#24302A] dark:text-[#FEFAF3] uppercase font-mono">
             PRAVAHA
           </span>
-          <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 tracking-normal mt-0.5">
+          <span className="text-[10px] font-medium text-[#55655B] dark:text-[#B9C7BD] tracking-normal mt-0.5">
             Urban Flood Intelligence
           </span>
         </span>

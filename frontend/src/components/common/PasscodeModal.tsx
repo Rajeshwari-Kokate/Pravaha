@@ -49,7 +49,6 @@ export const PasscodeModal: FC<Props> = ({ isOpen, onClose }) => {
       setStatus('authorized');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Authentication failure.';
-      // Allow fallback pass if offline testing with default passcode
       if (passcode === 'pravaha-operator-2026') {
         setStatus('authorized');
         setStats({
@@ -67,45 +66,47 @@ export const PasscodeModal: FC<Props> = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4"
+      role="presentation"
+      className="fixed inset-0 z-50 bg-[#24302A]/60 dark:bg-black/75 backdrop-blur-xs flex items-center justify-center p-4"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-5"
+        className="w-full max-w-md bg-white dark:bg-[#25312A] rounded-2xl shadow-[6px_6px_0px_#24302A] dark:shadow-[6px_6px_0px_#0E1410] border-[1.5px] border-[#24302A] dark:border-[#3A4A40] p-6 space-y-5 text-[#24302A] dark:text-[#FEFAF3]"
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div className="flex items-center justify-between border-b-[1.5px] border-[#24302A]/15 dark:border-[#3A4A40] pb-3">
           <div className="flex items-center gap-2">
-            <Lock className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-            <h3 className="font-bold text-sm text-slate-900 dark:text-white uppercase font-mono">
+            <Lock className="w-5 h-5 text-[#4F6B52] dark:text-[#B8CFB3]" />
+            <h3 className="font-bold text-sm text-[#24302A] dark:text-[#FEFAF3] uppercase font-mono">
               Operator Passcode Area
             </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+            aria-label="Close modal"
+            className="p-1 rounded-lg border border-[#24302A]/20 dark:border-[#3A4A40] hover:bg-[#F6E2E9]/60 transition-colors cursor-pointer"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4 text-[#24302A] dark:text-[#FEFAF3]" />
           </button>
         </div>
 
         {status !== 'authorized' ? (
           <form onSubmit={handleVerify} className="space-y-4 text-xs font-mono">
-            <p className="text-slate-600 dark:text-slate-400 font-sans leading-relaxed">
+            <p className="text-[#55655B] dark:text-[#B9C7BD] font-sans leading-relaxed text-xs">
               Enter municipal administrator passcode to access internal audit telemetry, stored inquiries, and diagnostic tools.
             </p>
 
             {status === 'error' && (
-              <div className="p-3 rounded bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 flex items-center gap-2">
+              <div className="p-3 rounded-lg bg-[#FEFAF3] dark:bg-[#25312A] border-2 border-[#B3261E] text-[#B3261E] dark:text-[#F08A80] flex items-center gap-2 font-bold">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{errorMessage}</span>
               </div>
             )}
 
-            <div>
-              <label className="block text-slate-700 dark:text-slate-300 mb-1">
-                Operator Passcode (Default: <code>pravaha-operator-2026</code>)
+            <div className="space-y-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#24302A] dark:text-[#FEFAF3]">
+                Operator Passcode (Default: pravaha-operator-2026)
               </label>
               <input
                 type="password"
@@ -113,7 +114,7 @@ export const PasscodeModal: FC<Props> = ({ isOpen, onClose }) => {
                 value={passcode}
                 onChange={e => setPasscode(e.target.value)}
                 placeholder="Enter passcode..."
-                className="w-full px-3 py-2 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 font-mono"
+                className="w-full px-3 py-2 rounded-lg border-[1.5px] border-[#24302A] dark:border-[#3A4A40] bg-white dark:bg-[#1C2620] text-[#24302A] dark:text-[#FEFAF3] shadow-[2px_2px_0px_#24302A] dark:shadow-[2px_2px_0px_#0E1410] focus:outline-none focus:ring-2 focus:ring-[#4F6B52] font-mono text-xs"
               />
             </div>
 
@@ -121,14 +122,14 @@ export const PasscodeModal: FC<Props> = ({ isOpen, onClose }) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="px-3 py-1.5 rounded-md border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50"
+                className="px-3.5 py-1.5 rounded-lg border-[1.5px] border-[#24302A] dark:border-[#3A4A40] bg-[#FEFAF3] dark:bg-[#1C2620] text-[#24302A] dark:text-[#FEFAF3] shadow-[1px_1px_0px_#24302A] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={status === 'verifying'}
-                className="px-4 py-1.5 rounded-md bg-teal-600 hover:bg-teal-700 text-white font-bold transition-colors disabled:opacity-50"
+                className="px-4 py-1.5 rounded-lg bg-[#84A282] text-[#24302A] border-2 border-[#24302A] font-bold shadow-[2px_2px_0px_#24302A] active:translate-y-[1px] active:shadow-none transition-all disabled:opacity-50 cursor-pointer"
               >
                 {status === 'verifying' ? 'Verifying...' : 'Authenticate'}
               </button>
@@ -136,28 +137,28 @@ export const PasscodeModal: FC<Props> = ({ isOpen, onClose }) => {
           </form>
         ) : (
           <div className="space-y-4 text-xs font-mono">
-            <div className="p-3 bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 rounded flex items-center gap-2 text-teal-800 dark:text-teal-200 font-bold">
-              <CheckCircle className="w-4 h-4 text-teal-600" />
+            <div className="p-3 bg-[#B8CFB3] border border-[#24302A] rounded-lg flex items-center gap-2 text-[#24302A] font-bold shadow-[2px_2px_0px_#24302A]">
+              <CheckCircle className="w-4 h-4 text-[#24302A]" />
               <span>Operator Session Active (Authorized)</span>
             </div>
 
             {stats && (
               <div className="grid grid-cols-2 gap-3 pt-2">
-                <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                  <span className="text-[10px] text-slate-500 uppercase block">Database Size</span>
-                  <span className="text-base font-black text-slate-900 dark:text-white">{stats.database_size_kb} KB</span>
+                <div className="p-3 rounded-xl bg-[#FEFAF3] dark:bg-[#1C2620] border-[1.5px] border-[#24302A] dark:border-[#3A4A40] shadow-[2px_2px_0px_#24302A]">
+                  <span className="text-[10px] text-[#55655B] dark:text-[#B9C7BD] uppercase block font-bold">Database Size</span>
+                  <span className="text-base font-black text-[#24302A] dark:text-[#FEFAF3]">{stats.database_size_kb} KB</span>
                 </div>
-                <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                  <span className="text-[10px] text-slate-500 uppercase block">Total Simulations</span>
-                  <span className="text-base font-black text-slate-900 dark:text-white">{stats.total_simulations}</span>
+                <div className="p-3 rounded-xl bg-[#FEFAF3] dark:bg-[#1C2620] border-[1.5px] border-[#24302A] dark:border-[#3A4A40] shadow-[2px_2px_0px_#24302A]">
+                  <span className="text-[10px] text-[#55655B] dark:text-[#B9C7BD] uppercase block font-bold">Total Simulations</span>
+                  <span className="text-base font-black text-[#24302A] dark:text-[#FEFAF3]">{stats.total_simulations}</span>
                 </div>
-                <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                  <span className="text-[10px] text-slate-500 uppercase block">Stored Reports</span>
-                  <span className="text-base font-black text-slate-900 dark:text-white">{stats.total_reports}</span>
+                <div className="p-3 rounded-xl bg-[#FEFAF3] dark:bg-[#1C2620] border-[1.5px] border-[#24302A] dark:border-[#3A4A40] shadow-[2px_2px_0px_#24302A]">
+                  <span className="text-[10px] text-[#55655B] dark:text-[#B9C7BD] uppercase block font-bold">Stored Reports</span>
+                  <span className="text-base font-black text-[#24302A] dark:text-[#FEFAF3]">{stats.total_reports}</span>
                 </div>
-                <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                  <span className="text-[10px] text-slate-500 uppercase block">Citizen Inquiries</span>
-                  <span className="text-base font-black text-slate-900 dark:text-white">{stats.total_inquiries}</span>
+                <div className="p-3 rounded-xl bg-[#FEFAF3] dark:bg-[#1C2620] border-[1.5px] border-[#24302A] dark:border-[#3A4A40] shadow-[2px_2px_0px_#24302A]">
+                  <span className="text-[10px] text-[#55655B] dark:text-[#B9C7BD] uppercase block font-bold">Citizen Inquiries</span>
+                  <span className="text-base font-black text-[#24302A] dark:text-[#FEFAF3]">{stats.total_inquiries}</span>
                 </div>
               </div>
             )}
@@ -166,7 +167,7 @@ export const PasscodeModal: FC<Props> = ({ isOpen, onClose }) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-1.5 rounded-md bg-slate-800 text-white font-sans text-xs"
+                className="px-4 py-1.5 rounded-lg bg-[#24302A] text-[#FEFAF3] font-sans text-xs font-semibold hover:bg-[#2F4A38] transition-colors cursor-pointer"
               >
                 Close Session
               </button>

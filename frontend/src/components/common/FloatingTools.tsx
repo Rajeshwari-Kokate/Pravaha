@@ -28,7 +28,7 @@ export const FloatingTools: FC = () => {
     <>
       {/* Scroll Progress Bar at very top of screen */}
       <div
-        className="fixed top-0 left-0 h-1 bg-teal-500 z-50 transition-all duration-150 pointer-events-none"
+        className="fixed top-0 left-0 h-[3px] bg-[#84A282] z-50 transition-all duration-150 pointer-events-none"
         style={{ width: `${scrollProgress}%` }}
         role="progressbar"
         aria-valuenow={Math.round(scrollProgress)}
@@ -42,11 +42,11 @@ export const FloatingTools: FC = () => {
         {/* Floating Contact Button */}
         <Link
           to="/contact"
-          className="p-3 rounded-full bg-slate-900 dark:bg-slate-800 text-white shadow-xl hover:bg-teal-600 transition-colors border border-slate-700/60 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-teal-500"
+          className="p-3 rounded-xl bg-white dark:bg-[#25312A] text-[#24302A] dark:text-[#FEFAF3] shadow-[3px_3px_0px_#24302A] dark:shadow-[3px_3px_0px_#0E1410] hover:bg-[#F6E2E9]/60 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all border-[1.5px] border-[#24302A] dark:border-[#3A4A40] flex items-center justify-center cursor-pointer"
           title="Contact Technical Support"
           aria-label="Contact Technical Support"
         >
-          <MessageSquare className="w-4 h-4" />
+          <MessageSquare className="w-4 h-4 text-[#4F6B52] dark:text-[#B8CFB3]" />
         </Link>
 
         {/* Back to top button */}
@@ -54,11 +54,11 @@ export const FloatingTools: FC = () => {
           <button
             type="button"
             onClick={scrollToTop}
-            className="p-3 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-white shadow-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="p-3 rounded-xl bg-white dark:bg-[#25312A] text-[#24302A] dark:text-[#FEFAF3] shadow-[3px_3px_0px_#24302A] dark:shadow-[3px_3px_0px_#0E1410] border-[1.5px] border-[#24302A] dark:border-[#3A4A40] hover:bg-[#F6E2E9]/60 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center justify-center cursor-pointer"
             title="Back to top"
             aria-label="Back to top"
           >
-            <ArrowUp className="w-4 h-4" />
+            <ArrowUp className="w-4 h-4 text-[#24302A] dark:text-[#FEFAF3]" />
           </button>
         )}
       </div>

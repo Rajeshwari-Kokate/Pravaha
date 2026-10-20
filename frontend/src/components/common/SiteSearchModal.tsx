@@ -76,17 +76,17 @@ export const SiteSearchModal: FC<Props> = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-start justify-center pt-16 sm:pt-24 px-4"
+      className="fixed inset-0 z-50 bg-[#24302A]/60 dark:bg-black/75 backdrop-blur-xs flex items-start justify-center pt-16 sm:pt-24 px-4"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-xl bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col"
+        className="w-full max-w-xl bg-white dark:bg-[#25312A] rounded-2xl shadow-[6px_6px_0px_#24302A] dark:shadow-[6px_6px_0px_#0E1410] border-[1.5px] border-[#24302A] dark:border-[#3A4A40] overflow-hidden flex flex-col"
         onClick={e => e.stopPropagation()}
         onKeyDown={handleKeyDown}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-800">
-          <Search className="w-5 h-5 text-teal-600 dark:text-teal-400 shrink-0" />
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b-[1.5px] border-[#24302A] dark:border-[#3A4A40]">
+          <Search className="w-5 h-5 text-[#4F6B52] dark:text-[#B8CFB3] shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -96,21 +96,21 @@ export const SiteSearchModal: FC<Props> = ({ isOpen, onClose }) => {
               setSelectedIndex(0);
             }}
             placeholder="Search documentation, routes, lessons, formulas..."
-            className="w-full bg-transparent text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none font-sans"
+            className="w-full bg-transparent text-sm text-[#24302A] dark:text-[#FEFAF3] placeholder:text-[#55655B] dark:placeholder:text-[#B9C7BD] focus:outline-none font-sans"
           />
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+            className="p-1 rounded-[4px] border border-[#24302A]/20 dark:border-[#3A4A40] hover:bg-[#F6E2E9]/60 transition-colors cursor-pointer"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4 text-[#24302A] dark:text-[#FEFAF3]" />
           </button>
         </div>
 
         {/* Results List */}
-        <div className="max-h-80 overflow-y-auto p-2 divide-y divide-slate-100 dark:divide-slate-800/60">
+        <div className="max-h-80 overflow-y-auto p-2 divide-y divide-[#24302A]/10 dark:divide-[#3A4A40]/60">
           {results.length === 0 ? (
-            <div className="p-8 text-center text-xs text-slate-500 font-mono">
+            <div className="p-8 text-center text-xs text-[#55655B] font-mono">
               No matching terms or topics found for "{query}".
             </div>
           ) : (
@@ -126,37 +126,37 @@ export const SiteSearchModal: FC<Props> = ({ isOpen, onClose }) => {
                     onClose();
                   }}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`w-full text-left p-3 rounded-lg flex items-center justify-between gap-3 text-xs transition-colors ${
+                  className={`w-full text-left p-3 rounded-xl flex items-center justify-between gap-3 text-xs transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-teal-50 dark:bg-teal-950/40 text-teal-900 dark:text-teal-200'
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/40'
+                      ? 'bg-[#F6E2E9] dark:bg-[#2F4A38] text-[#24302A] dark:text-[#FEFAF3] border border-[#24302A]'
+                      : 'text-[#24302A] dark:text-[#FEFAF3] hover:bg-[#FEFAF3] dark:hover:bg-[#1C2620]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`p-2 rounded-md ${
+                      className={`p-2 rounded-lg border border-[#24302A] ${
                         isSelected
-                          ? 'bg-teal-600 text-white'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                          ? 'bg-[#84A282] text-[#24302A]'
+                          : 'bg-[#FEFAF3] dark:bg-[#1C2620] text-[#4F6B52] dark:text-[#B8CFB3]'
                       }`}
                     >
                       <Icon className="w-4 h-4" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold font-sans text-slate-900 dark:text-white">
+                        <span className="font-bold font-heading text-sm text-[#24302A] dark:text-[#FEFAF3]">
                           {item.title}
                         </span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-[4px] border border-[#24302A]/30 bg-white dark:bg-[#1C2620] text-[#55655B] dark:text-[#B9C7BD]">
                           {item.category}
                         </span>
                       </div>
-                      <span className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                      <span className="text-[11px] text-[#55655B] dark:text-[#B9C7BD] line-clamp-1 mt-0.5">
                         {item.subtitle}
                       </span>
                     </div>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-slate-400 shrink-0" />
+                  <ArrowRight className="w-4 h-4 text-[#55655B] dark:text-[#B9C7BD] shrink-0" />
                 </button>
               );
             })
@@ -164,7 +164,7 @@ export const SiteSearchModal: FC<Props> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Keyboard Footer */}
-        <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 flex items-center justify-between text-[10px] font-mono text-slate-500">
+        <div className="px-4 py-2 border-t-[1.5px] border-[#24302A] dark:border-[#3A4A40] bg-[#FEFAF3] dark:bg-[#1C2620] flex items-center justify-between text-[10px] font-mono text-[#55655B] dark:text-[#B9C7BD]">
           <span>Use ↑ ↓ to navigate</span>
           <span>Press ↵ to select • ESC to close</span>
         </div>

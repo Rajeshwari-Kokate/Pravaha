@@ -81,7 +81,7 @@ export function App() {
           onCloseOverride={() => setCookieBannerOpen(false)}
         />
 
-        <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 transition-colors">
+        <div className="flex flex-col min-h-screen bg-[#FEFAF3] dark:bg-[#1C2620] text-[#24302A] dark:text-[#FEFAF3] transition-colors selection:bg-[#F6E2E9] selection:text-[#24302A]">
           {/* Main Navigation Header */}
           <Header onOpenSearch={() => setSearchModalOpen(true)} />
 

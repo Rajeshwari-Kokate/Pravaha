@@ -2,7 +2,6 @@ import { useEffect, useState, type FC } from 'react';
 
 export const Preloader: FC<{ onComplete?: () => void }> = ({ onComplete }) => {
   const [show, setShow] = useState<boolean>(() => {
-    // Check if reduced motion or already preloaded in session
     if (typeof window === 'undefined') return false;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) return false;
@@ -18,7 +17,6 @@ export const Preloader: FC<{ onComplete?: () => void }> = ({ onComplete }) => {
       return;
     }
 
-    // Auto dismiss after 1.1s (under 1.2s limit)
     const fadeTimer = setTimeout(() => {
       setFading(true);
     }, 850);
@@ -58,38 +56,35 @@ export const Preloader: FC<{ onComplete?: () => void }> = ({ onComplete }) => {
     <div
       role="status"
       aria-live="polite"
-      className={`fixed inset-0 z-[100000] flex flex-col items-center justify-center bg-slate-900 text-white transition-opacity duration-200 ${
+      className={`fixed inset-0 z-[100000] flex flex-col items-center justify-center bg-[#1C2620] text-[#FEFAF3] transition-opacity duration-200 ${
         fading ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
       <div className="relative flex flex-col items-center">
         {/* SVG drainage mark drawing itself */}
         <svg
-          width="72"
-          height="72"
+          width="76"
+          height="76"
           viewBox="0 0 48 48"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="mb-4"
         >
-          <rect width="48" height="48" rx="8" fill="#1e293b" />
-          {/* Main trunk */}
+          <rect width="48" height="48" rx="8" fill="#24302A" stroke="#84A282" strokeWidth="2" />
           <path
             d="M24 6V42"
-            stroke="#14b8a6"
+            stroke="#84A282"
             strokeWidth="3.5"
             strokeLinecap="round"
-            className="animate-[drawTrunk_0.8s_ease-out_forwards]"
             style={{
               strokeDasharray: 36,
               strokeDashoffset: 36,
               animation: 'drawPath 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards',
             }}
           />
-          {/* Lateral branches */}
           <path
             d="M10 16L24 24L38 16"
-            stroke="#38bdf8"
+            stroke="#3A7F8F"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -101,7 +96,7 @@ export const Preloader: FC<{ onComplete?: () => void }> = ({ onComplete }) => {
           />
           <path
             d="M13 30L24 35L35 30"
-            stroke="#38bdf8"
+            stroke="#3A7F8F"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -111,18 +106,20 @@ export const Preloader: FC<{ onComplete?: () => void }> = ({ onComplete }) => {
               animation: 'drawPath 0.5s 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards',
             }}
           />
-          <circle cx="24" cy="24" r="3" fill="#14b8a6" />
-          <circle cx="24" cy="35" r="2.5" fill="#14b8a6" />
+          <circle cx="24" cy="24" r="3" fill="#B8CFB3" />
+          <circle cx="24" cy="35" r="2.5" fill="#B8CFB3" />
         </svg>
 
-        <span className="font-mono text-sm tracking-widest text-teal-400 font-bold uppercase">
+        <span className="font-mono text-base tracking-widest text-[#B8CFB3] font-bold uppercase">
           PRAVAHA
         </span>
-        <span className="text-xs text-slate-400 mt-1">Initializing drainage graph...</span>
+        <span className="text-xs text-[#B9C7BD] mt-1 font-sans">
+          Initializing hydraulic network model...
+        </span>
 
         <button
           onClick={handleSkip}
-          className="mt-6 text-xs text-slate-400 hover:text-white px-3 py-1 rounded-md border border-slate-700 bg-slate-800 hover:bg-slate-700 transition-colors"
+          className="mt-6 text-xs text-[#FEFAF3] px-3.5 py-1.5 rounded-lg border-[1.5px] border-[#3A4A40] bg-[#25312A] hover:bg-[#2F4A38] active:translate-y-[1px] shadow-[2px_2px_0px_#0E1410] transition-all cursor-pointer font-medium"
           aria-label="Skip preloader animation"
         >
           Skip (Esc)

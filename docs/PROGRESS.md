@@ -14,11 +14,13 @@
   - [x] Automated contrast-check script verifying WCAG AA for all text/background pairs
   - [x] Base components restyled with 1.5px borders, flat 3px 3px 0 offset shadow, 8px radius buttons, 12-16px card radius, no pill shapes
 
-NEXT STEP: R2 Shell (sidebar, top bar, header, mobile menu, footer, theme toggle)
-- [ ] **R2: Shell**
-  - [ ] Slim left sidebar, top bar, header, mobile menu, footer, theme toggle
-  - [ ] Brand mark recolored to new palette
-  - [ ] Search modal and storage preference banner restyled
+- [x] **R2: Shell**
+  - [x] Slim left sidebar, top bar, header, mobile menu, footer, theme toggle
+  - [x] Brand mark recolored to new palette
+  - [x] Search modal and storage preference banner restyled
+
+NEXT STEP: R3 Landing Page (/)
+
 - [ ] **R3: Landing Page (/)**
   - [ ] New hero with real interactive MapLibre map of demonstration network
   - [ ] Workflow row ("Analyse scenarios", "Identify risk areas", "Plan informed actions")

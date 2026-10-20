@@ -1,5 +1,5 @@
 import { useEffect, useRef, type FC } from 'react';
-import { AlertTriangle, X } from 'lucide-react';
+import { AlertCircle, X } from 'lucide-react';
 
 interface ConfirmationModalProps {
   isOpen: boolean;
@@ -28,7 +28,6 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({
   useEffect(() => {
     if (isOpen) {
       triggerRef.current = document.activeElement as HTMLElement;
-      // Focus modal or confirm button
       setTimeout(() => {
         const firstFocusable = modalRef.current?.querySelector<HTMLElement>(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -64,10 +63,15 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({
         }
       };
 
+      document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
+
       return () => {
+        document.body.style.overflow = '';
         window.removeEventListener('keydown', handleKeyDown);
-        triggerRef.current?.focus();
+        if (triggerRef.current) {
+          triggerRef.current.focus();
+        }
       };
     }
   }, [isOpen, onClose]);
@@ -76,7 +80,8 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-900/60 dark:bg-black/75 backdrop-blur-[2px]"
+      role="presentation"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#24302A]/60 dark:bg-black/75 backdrop-blur-xs"
       onClick={onClose}
     >
       <div
@@ -86,27 +91,33 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({
         aria-labelledby="modal-title"
         aria-describedby="modal-desc"
         onClick={e => e.stopPropagation()}
-        className="w-full max-w-md rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-xl text-left transition-all"
+        className="w-full max-w-md rounded-2xl bg-white dark:bg-[#25312A] border-[1.5px] border-[#24302A] dark:border-[#3A4A40] p-6 shadow-[6px_6px_0px_#24302A] dark:shadow-[6px_6px_0px_#0E1410] text-left transition-all"
       >
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-md ${isDestructive ? 'bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400' : 'bg-amber-50 dark:bg-amber-950 text-amber-600'}`}>
-              <AlertTriangle className="w-5 h-5" aria-hidden="true" />
+            <div
+              className={`p-2 rounded-lg border ${
+                isDestructive
+                  ? 'bg-[#FEFAF3] dark:bg-[#25312A] border-2 border-[#B3261E] text-[#B3261E] dark:text-[#F08A80]'
+                  : 'bg-[#B8CFB3] border-[#24302A] text-[#24302A]'
+              }`}
+            >
+              <AlertCircle className="w-5 h-5 shrink-0" aria-hidden="true" />
             </div>
-            <h2 id="modal-title" className="text-base font-semibold text-slate-900 dark:text-slate-100">
+            <h2 id="modal-title" className="text-base font-bold font-heading text-[#24302A] dark:text-[#FEFAF3]">
               {title}
             </h2>
           </div>
           <button
             onClick={onClose}
             aria-label="Close dialog"
-            className="p-1 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg border border-[#24302A]/20 dark:border-[#3A4A40] text-[#24302A] dark:text-[#FEFAF3] hover:bg-[#F6E2E9]/60 transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <p id="modal-desc" className="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+        <p id="modal-desc" className="mt-3 text-xs text-[#55655B] dark:text-[#B9C7BD] leading-relaxed">
           {description}
         </p>
 
@@ -114,7 +125,7 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-medium rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+            className="px-4 py-2 text-xs font-semibold rounded-lg border-[1.5px] border-[#24302A] dark:border-[#3A4A40] bg-[#FEFAF3] dark:bg-[#1C2620] text-[#24302A] dark:text-[#FEFAF3] shadow-[1px_1px_0px_#24302A] hover:bg-[#F6E2E9]/40 active:translate-y-[1px] active:shadow-none transition-all cursor-pointer"
           >
             {cancelLabel}
           </button>
@@ -124,10 +135,10 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({
               onConfirm();
               onClose();
             }}
-            className={`px-4 py-2 text-xs font-medium rounded-md text-white transition-colors ${
+            className={`px-4 py-2 text-xs font-bold rounded-lg border-2 border-[#24302A] shadow-[2px_2px_0px_#24302A] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer ${
               isDestructive
-                ? 'bg-red-600 hover:bg-red-700 focus-visible:ring-2 focus-visible:ring-red-500'
-                : 'bg-teal-600 hover:bg-teal-700 focus-visible:ring-2 focus-visible:ring-teal-500'
+                ? 'bg-[#B3261E] text-white hover:bg-[#8F1A14]'
+                : 'bg-[#84A282] text-[#24302A] hover:bg-[#739171]'
             }`}
           >
             {confirmLabel}
