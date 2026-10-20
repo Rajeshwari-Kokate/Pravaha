@@ -31,10 +31,11 @@
   - [x] Bottom area: "Simulation Results (Summary)" with KPI tiles, legend, bottom tabs, timeline scrubber
   - [x] Flowing pipes animation and rain effect toggle
 
-NEXT STEP: R5 Scenario Comparison & Segment Detail
-- [ ] **R5: Scenario Comparison & Segment Detail**
-  - [ ] Scenario Comparison page (`/scenarios`) with side-by-side maps, parameters, comparison metrics card
-  - [ ] Segment Detail drawer/page (`/bottleneck` & segment view) with water gauge, flow profile, elevation profile, bottleneck ranking factors
+- [x] **R5: Scenario Comparison & Segment Detail**
+  - [x] Scenario Comparison page (`/scenarios`) with side-by-side maps, parameters, comparison metrics card
+  - [x] Segment Detail drawer/page (`/bottleneck` & segment view) with water gauge, flow profile, elevation profile, bottleneck ranking factors
+
+NEXT STEP: R6 Report, Methodology, Learn, Contact, Privacy, Terms, 404
 - [ ] **R6: Report, Methodology, Learn, Contact, Privacy, Terms, 404**
   - [ ] Investigation report (`/reports/:id`) with Gemma evidence tags, print layout ("Download PDF"), export JSON
   - [ ] Methodology page (`/methodology`) with sub-navigation and genuine data provenance table
