@@ -46,13 +46,14 @@
   - [x] Honest celebration stamp on scenario comparison
   - [x] Flood school lesson completion stamps
 
-NEXT STEP: R8 Responsive, Accessibility & Theme Polish
-- [ ] **R8: Responsive, Accessibility & Theme Polish**
-  - [ ] Responsive pass at 1440, 1024, 768, 390 px
-  - [ ] Keyboard navigation and focus rings
-  - [ ] Reduced motion compliance (`prefers-reduced-motion`)
-  - [ ] Contrast checks in both themes
-  - [ ] Capture after-screenshots in `docs/redesign/after/` (light and dark)
+- [x] **R8: Responsive, Accessibility & Theme Polish**
+  - [x] Responsive pass at 1440, 1024, 768, 390 px
+  - [x] Keyboard navigation and focus rings
+  - [x] Reduced motion compliance (`prefers-reduced-motion`)
+  - [x] Contrast checks in both themes
+  - [x] Capture after-screenshots in `docs/redesign/after/` (light and dark)
+
+NEXT STEP: R9 Verification & Final Commit
 - [ ] **R9: Verification & Final Commit**
   - [ ] Run full test suites: Vitest (46/46) and Pytest (80/80)
   - [ ] Run full production build (`npm run build`)

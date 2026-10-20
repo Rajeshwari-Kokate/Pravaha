@@ -4,6 +4,10 @@ type Theme = 'light' | 'dark';
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== 'undefined') {
+      const urlTheme = new URLSearchParams(window.location.search).get('theme');
+      if (urlTheme === 'light' || urlTheme === 'dark') return urlTheme;
+    }
     const saved = localStorage.getItem('pravaha-theme');
     if (saved === 'light' || saved === 'dark') {
       return saved;
