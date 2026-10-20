@@ -35,11 +35,12 @@
   - [x] Scenario Comparison page (`/scenarios`) with side-by-side maps, parameters, comparison metrics card
   - [x] Segment Detail drawer/page (`/bottleneck` & segment view) with water gauge, flow profile, elevation profile, bottleneck ranking factors
 
-NEXT STEP: R6 Report, Methodology, Learn, Contact, Privacy, Terms, 404
-- [ ] **R6: Report, Methodology, Learn, Contact, Privacy, Terms, 404**
-  - [ ] Investigation report (`/reports/:id`) with Gemma evidence tags, print layout ("Download PDF"), export JSON
-  - [ ] Methodology page (`/methodology`) with sub-navigation and genuine data provenance table
-  - [ ] Learn, Contact, Privacy, Terms, 404 pages restyled
+- [x] **R6: Report, Methodology, Learn, Contact, Privacy, Terms, 404**
+  - [x] Investigation report (`/reports/:id`) with Gemma evidence tags, print layout ("Download PDF"), export JSON
+  - [x] Methodology page (`/methodology`) with sub-navigation and genuine data provenance table
+  - [x] Learn, Contact, Privacy, Terms, 404 pages restyled
+
+NEXT STEP: R7 Playful, Useful Interactions & Polish
 - [ ] **R7: Playful, Useful Interactions & Polish**
   - [ ] Guided tour (5 steps, skippable, localStorage)
   - [ ] Empty and loading SVG states

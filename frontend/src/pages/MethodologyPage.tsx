@@ -1,174 +1,210 @@
-import { type FC } from 'react';
-import { ShieldAlert, Layers, GitBranch, Database } from 'lucide-react';
+/**
+ * MethodologyPage.tsx
+ * Methodology view matching master prompt:
+ * Left sub-navigation: Data Sources, Simulation Approach, Drainage Network Model,
+ * Bottleneck Analysis, Dataset and Model Card, Limitations, Future Work.
+ * Data Sources table strictly derived from DATA_PROVENANCE.md and DATASET_REPORT.md.
+ */
+import { useState, type FC } from 'react';
+import { Database, GitBranch, Layers, Sliders, ShieldAlert, Compass, Sparkles } from 'lucide-react';
 
 export const MethodologyPage: FC = () => {
-  const buildDate = typeof __BUILD_DATE__ !== 'undefined' ? __BUILD_DATE__ : '2026-10-18';
+  const [activeTab, setActiveTab] = useState<
+    'sources' | 'simulation' | 'drainage' | 'bottleneck' | 'modelcard' | 'limitations' | 'future'
+  >('sources');
+
+  const navItems = [
+    { id: 'sources' as const, label: 'Data Sources', icon: Database },
+    { id: 'simulation' as const, label: 'Simulation Approach', icon: Compass },
+    { id: 'drainage' as const, label: 'Drainage Network Model', icon: GitBranch },
+    { id: 'bottleneck' as const, label: 'Bottleneck Analysis', icon: Sliders },
+    { id: 'modelcard' as const, label: 'Dataset & Model Card', icon: Layers },
+    { id: 'limitations' as const, label: 'Limitations', icon: ShieldAlert },
+    { id: 'future' as const, label: 'Future Work', icon: Sparkles },
+  ];
+
+  // REAL Data Sources from docs/DATA_PROVENANCE.md
+  const dataSources = [
+    {
+      dataset: 'Road Network and Civic Assets',
+      source: 'OpenStreetMap contributors via Overpass API',
+      description: 'Road centerlines and critical civic infrastructure (hospitals, fire stations, substations) in Koramangala Catchment',
+      licence: 'Open Database License (ODbL) 1.0',
+    },
+    {
+      dataset: 'Synthetic Drainage Network',
+      source: 'Deterministic Model (Seed 42)',
+      description: 'Conduit centerlines aligned to road centerlines directed toward Bellandur valley low points with synthetic capacities',
+      licence: 'Internal Demonstration Model (CC BY 4.0)',
+    },
+    {
+      dataset: 'Regional Flood Risk Dataset',
+      source: 'Tabular Dataset (flood_risk_dataset_india.csv)',
+      description: '10,000 multi-variable flood observations across India used for regional susceptibility ML benchmarking',
+      licence: 'Origin and licence unverified (Research demonstration)',
+    },
+    {
+      dataset: 'Basemap Tiles',
+      source: 'CARTO (Positron & Dark Matter)',
+      description: 'Raster and vector basemap tiles with OpenStreetMap boundary references',
+      licence: 'OpenStreetMap contributors / CARTO Free Tier',
+    },
+  ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
-      <div>
-        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400">
-          Technical Specification
-        </span>
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
-          Hydrological & Drainage Methodology
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      {/* Page Header */}
+      <div className="pb-3 border-b border-border">
+        <h1 className="text-xl sm:text-2xl font-bold font-display text-ink">
+          Methodology
         </h1>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-          Detailed mathematical formulations, spatial algorithms, dataset card, and modeling constraints underpinning PRAVAHA.
+        <p className="text-xs text-ink-muted mt-1">
+          Hydraulic formulations, network algorithms, data provenance, and engineering limitations.
         </p>
-        <p className="text-[11px] font-mono text-slate-400 mt-1">Last updated: {buildDate}</p>
       </div>
 
-      {/* Section 1: Hydrological Formulations */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-800">
-          <Layers className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-            1. Runoff Generation: The Rational Method
-          </h2>
-        </div>
-        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-          Urban runoff peak flow is calculated per contributing node catchment using the Rational Method formulation:
-        </p>
-        <div className="p-4 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-800 dark:text-slate-200">
-          Q = (C * I * A) / (3.6 * 10^6)
-        </div>
-        <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1.5 list-disc pl-5">
-          <li><strong>Q</strong>: Peak runoff rate (cubic meters per second, m³/s).</li>
-          <li><strong>C</strong>: Composite runoff coefficient (0.85 for paved urban surfaces; 0.25 for open vegetative land).</li>
-          <li><strong>I</strong>: Uniform rainfall intensity in millimeters per hour (mm/h).</li>
-          <li><strong>A</strong>: Contributing subcatchment surface area in square meters (m²).</li>
-        </ul>
-      </section>
+      {/* Main 2-Column: Left Sub-navigation + Right Section Content */}
+      <div className="flex flex-col lg:flex-row gap-8 items-start">
+        {/* Left Sub-Navigation */}
+        <nav className="w-full lg:w-60 shrink-0 flex flex-col gap-1 select-none" aria-label="Methodology sections">
+          {navItems.map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setActiveTab(id)}
+              className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs text-left transition-all ${
+                activeTab === id
+                  ? 'bg-sage-300 text-ink font-bold border border-border shadow-sm'
+                  : 'text-ink-muted hover:text-ink hover:bg-pink/40'
+              }`}
+            >
+              <Icon className="w-3.5 h-3.5 text-sage-700 shrink-0" />
+              <span>{label}</span>
+            </button>
+          ))}
+        </nav>
 
-      {/* Section 2: Flow Conveyance */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-800">
-          <GitBranch className="w-5 h-5 text-sky-600 dark:text-sky-400" />
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-            2. Topological Network Conveyance & Exceedance
-          </h2>
-        </div>
-        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-          Drainage segments are represented as edges in a directed NetworkX graph. Runoff is routed downstream topologically:
-        </p>
-        <div className="p-4 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-800 dark:text-slate-200">
-          Q_effective = Q_nominal * (1 - BlockageFactor)
-          <br />
-          ExceedanceRatio = Demand / Q_effective
-        </div>
-        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-          When Demand exceeds Q_effective (ExceedanceRatio &gt; 1.0), the segment is flagged as exceeding modeled capacity, and relative accumulation indicators are mapped to adjacent spatial nodes.
-        </p>
-      </section>
+        {/* Right Section Content */}
+        <div className="flex-1 w-full bg-surface p-6 sm:p-8 rounded-xl border border-border shadow-offset text-xs text-ink space-y-6">
+          {/* Tab 1: Data Sources Table */}
+          {activeTab === 'sources' && (
+            <div className="space-y-4">
+              <div>
+                <h2 className="text-base font-bold font-display text-ink">Data Sources</h2>
+                <p className="text-xs text-ink-muted mt-1 leading-relaxed">
+                  This project uses publicly available and open datasets. All data is used for demonstration and research purposes only.
+                </p>
+              </div>
 
-      {/* Section 3: Dataset and Model Card */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-800">
-          <Database className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-            3. Dataset & Model Card (flood_risk_dataset_india.csv)
-          </h2>
+              <div className="overflow-x-auto rounded-lg border border-border">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead className="bg-background font-mono text-[10px] text-ink-muted uppercase border-b border-border">
+                    <tr>
+                      <th className="p-3">Dataset</th>
+                      <th className="p-3">Source</th>
+                      <th className="p-3">Description</th>
+                      <th className="p-3">Licence</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border/60">
+                    {dataSources.map((row, i) => (
+                      <tr key={i} className="hover:bg-cream dark:hover:bg-background/80">
+                        <td className="p-3 font-bold text-ink whitespace-nowrap">{row.dataset}</td>
+                        <td className="p-3 font-mono text-sage-700 whitespace-nowrap">{row.source}</td>
+                        <td className="p-3 text-ink-muted leading-normal">{row.description}</td>
+                        <td className="p-3 font-mono text-[11px] whitespace-nowrap">
+                          <span className="px-2 py-0.5 rounded bg-background border border-border text-ink-muted">
+                            {row.licence}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Tab 2: Simulation Approach */}
+          {activeTab === 'simulation' && (
+            <div className="space-y-4">
+              <h2 className="text-base font-bold font-display text-ink">Simulation Approach</h2>
+              <p className="text-xs text-ink leading-relaxed">
+                Catchment runoff generation implements the standard Rational Method formula:
+              </p>
+              <div className="p-3.5 rounded-lg border border-border bg-background font-mono text-xs font-bold text-sage-900 dark:text-cream">
+                Q = (C × i × A) / 360  [m³/s]
+              </div>
+              <ul className="list-disc pl-5 space-y-1.5 text-xs text-ink-muted leading-relaxed">
+                <li><strong className="text-ink">Q</strong>: Peak storm runoff rate in cubic meters per second (m³/s).</li>
+                <li><strong className="text-ink">C</strong>: Dimensionless composite runoff coefficient (0.70 baseline for high-density urban areas).</li>
+                <li><strong className="text-ink">i</strong>: Rainfall intensity in millimeters per hour (mm/hr).</li>
+                <li><strong className="text-ink">A</strong>: Contributing subcatchment area in hectares (ha).</li>
+              </ul>
+            </div>
+          )}
+
+          {/* Tab 3: Drainage Network Model */}
+          {activeTab === 'drainage' && (
+            <div className="space-y-4">
+              <h2 className="text-base font-bold font-display text-ink">Drainage Network Model</h2>
+              <p className="text-xs text-ink-muted leading-relaxed">
+                The drainage network is modeled as a directed acyclic graph (DAG) directed downstream toward the Bellandur valley line. Runoff propagates in topological order:
+              </p>
+              <div className="p-3.5 rounded-lg border border-border bg-background font-mono text-xs">
+                Q_effective = Nominal_Capacity × (1 - Blockage_Factor)
+              </div>
+              <p className="text-xs text-ink-muted leading-relaxed">
+                When upstream inflow exceeds effective capacity, the segment surcharges and excess flow is tagged as surface accumulation at the terminal node.
+              </p>
+            </div>
+          )}
+
+          {/* Tab 4: Bottleneck Analysis */}
+          {activeTab === 'bottleneck' && (
+            <div className="space-y-4">
+              <h2 className="text-base font-bold font-display text-ink">Bottleneck Analysis</h2>
+              <p className="text-xs text-ink-muted leading-relaxed">
+                Conduits are scored and ranked using linear multi-criteria weights across flow exceedance ratio, physical blockage factor, downstream topological dependency, and channel hierarchy.
+              </p>
+            </div>
+          )}
+
+          {/* Tab 5: Dataset & Model Card */}
+          {activeTab === 'modelcard' && (
+            <div className="space-y-4">
+              <h2 className="text-base font-bold font-display text-ink">Dataset & Model Card</h2>
+              <p className="text-xs text-ink-muted leading-relaxed">
+                Regional susceptibility models (Logistic Regression and Gradient Boosted Decision Trees) were evaluated on 10,000 rows with an 80/20 train/test split. Both models achieved ROC AUC scores hovering around 0.49 to 0.50 (chance level), confirming that the regional dataset lacks strong predictive signal and should be treated as synthetic demonstration data only.
+              </p>
+            </div>
+          )}
+
+          {/* Tab 6: Limitations */}
+          {activeTab === 'limitations' && (
+            <div className="space-y-4">
+              <h2 className="text-base font-bold font-display text-ink">Limitations</h2>
+              <ul className="list-disc pl-5 space-y-2 text-xs text-ink leading-relaxed">
+                <li>Drainage alignments and dimensions are synthetically generated from OpenStreetMap road alignments.</li>
+                <li>Digital elevation models (DEM) were unavailable at fine scale; an assumed uniform hydraulic slope of 0.8% was applied.</li>
+                <li>Simulations do not model pressurized pipe flow or dynamic backwater wave equations.</li>
+              </ul>
+            </div>
+          )}
+
+          {/* Tab 7: Future Work */}
+          {activeTab === 'future' && (
+            <div className="space-y-4">
+              <h2 className="text-base font-bold font-display text-ink">Future Work</h2>
+              <ul className="list-disc pl-5 space-y-2 text-xs text-ink leading-relaxed">
+                <li>Integration of municipal GIS underground stormwater survey layers when released into open data portals.</li>
+                <li>High-resolution LiDAR digital surface models for fine-grained street gutter routing.</li>
+                <li>Full dynamic Saint-Venant hydraulic wave routing for multi-timestep unsteady simulations.</li>
+              </ul>
+            </div>
+          )}
         </div>
-        <div className="p-5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
-            <div>
-              <span className="font-mono text-sm font-bold text-slate-900 dark:text-white block">
-                Supervised Susceptibility Model Evaluation Card
-              </span>
-              <span className="text-xs text-slate-500">
-                Trained on 10,000 tabular observations with 80/20 stratified train/test split.
-              </span>
-            </div>
-            <span className="font-mono text-[11px] px-2.5 py-1 rounded bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 self-start sm:self-auto">
-              Origin and Licence Unverified
-            </span>
-          </div>
-
-          {/* Performance Benchmark Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
-            <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-              <span className="text-[10px] text-slate-500 uppercase block">Logistic Reg. ROC AUC</span>
-              <span className="text-xl font-black text-slate-900 dark:text-white">0.4982</span>
-              <span className="text-[10px] text-slate-400 block mt-0.5">Chance level (~0.50)</span>
-            </div>
-            <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-              <span className="text-[10px] text-slate-500 uppercase block">GBDT ROC AUC</span>
-              <span className="text-xl font-black text-slate-900 dark:text-white">0.4921</span>
-              <span className="text-[10px] text-slate-400 block mt-0.5">Non-linear trees</span>
-            </div>
-            <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-              <span className="text-[10px] text-slate-500 uppercase block">Held-Out Test Set</span>
-              <span className="text-xl font-black text-slate-900 dark:text-white">2,000</span>
-              <span className="text-[10px] text-slate-400 block mt-0.5">Stratified evaluation</span>
-            </div>
-            <div className="p-3 rounded bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-              <span className="text-[10px] text-slate-500 uppercase block">Target Class Balance</span>
-              <span className="text-xl font-black text-slate-900 dark:text-white">50.6%</span>
-              <span className="text-[10px] text-slate-400 block mt-0.5">5,057 vs 4,943</span>
-            </div>
-          </div>
-
-          {/* Confusion Matrix Table */}
-          <div className="space-y-2 pt-2">
-            <h3 className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono">
-              Held-Out Confusion Matrix (Logistic Regression, 20% split)
-            </h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs text-center border border-slate-200 dark:border-slate-700 font-mono">
-                <thead>
-                  <tr className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                    <th className="p-2 border border-slate-200 dark:border-slate-700 text-left font-sans">Ground Truth \ Predicted</th>
-                    <th className="p-2 border border-slate-200 dark:border-slate-700">Predicted No Flood (0)</th>
-                    <th className="p-2 border border-slate-200 dark:border-slate-700">Predicted Flood (1)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="p-2 border border-slate-200 dark:border-slate-700 text-left font-semibold">Actual No Flood (0)</td>
-                    <td className="p-2 border border-slate-200 dark:border-slate-700 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold">540 (TN)</td>
-                    <td className="p-2 border border-slate-200 dark:border-slate-700 bg-rose-500/10 text-rose-700 dark:text-rose-400">449 (FP)</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2 border border-slate-200 dark:border-slate-700 text-left font-semibold">Actual Flood (1)</td>
-                    <td className="p-2 border border-slate-200 dark:border-slate-700 bg-rose-500/10 text-rose-700 dark:text-rose-400">555 (FN)</td>
-                    <td className="p-2 border border-slate-200 dark:border-slate-700 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold">456 (TP)</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Synthetic Indicators & Scientific Caveats */}
-          <div className="p-3.5 rounded bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900 text-xs space-y-2 text-slate-700 dark:text-slate-300">
-            <span className="font-bold text-amber-800 dark:text-amber-400 block">
-              Methodological Findings & Caveats
-            </span>
-            <ul className="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
-              <li>
-                <strong>Synthetic distribution characteristics:</strong> The dataset exhibits near-uniform distributions across environmental continuous variables (e.g. Rainfall mean 150.0mm ±86.5) and equal proportions across categorical soil/land-cover types.
-              </li>
-              <li>
-                <strong>Absence of physical correlation:</strong> Both linear and tree-based ensembles confirm near-zero correlation between input features and target labels (ROC AUC = ~0.49-0.50).
-              </li>
-              <li>
-                <strong>Operational boundaries:</strong> Machine learning scores derived from this file are intended solely for sensitivity exploration and transparency demonstrations, not physical risk delineation. Engineering calculations in PRAVAHA utilize deterministic hydraulic formulas.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Limitations Notice */}
-      <section className="p-6 rounded-md border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/50 space-y-3">
-        <div className="flex items-center gap-2 text-slate-900 dark:text-white font-bold text-sm">
-          <ShieldAlert className="w-5 h-5 text-amber-500" />
-          <h3>Engineering Constraints and Model Limitations</h3>
-        </div>
-        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-          PRAVAHA is designed strictly for screening and technical investigation. It does not model pressurized pipe dynamics, backwater surface profiles, pump station operations, or uncalibrated physical water depths.
-        </p>
-      </section>
+      </div>
     </div>
   );
 };

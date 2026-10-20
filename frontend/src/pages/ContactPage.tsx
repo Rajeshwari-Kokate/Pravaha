@@ -16,7 +16,6 @@ export const ContactPage: FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.website_hp) {
-      // Honeypot caught
       setStatus('success');
       return;
     }
@@ -57,40 +56,40 @@ export const ContactPage: FC = () => {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       <div>
-        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400">
+        <span className="font-mono text-xs font-bold uppercase tracking-wider text-sage-700 dark:text-sage-300">
           Inquiries & Feedback
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
+        <h1 className="text-2xl sm:text-3xl font-bold text-ink dark:text-cream mt-1 font-sans">
           Technical Contact
         </h1>
-        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-          Submit technical feedback, report potential data discrepancies in the study area, or inquire regarding methodology implementations.
+        <p className="text-xs sm:text-sm text-ink-muted dark:text-muted-dark mt-2 leading-relaxed">
+          Submit technical feedback, report potential drainage network discrepancies, or inquire regarding methodology implementations.
         </p>
       </div>
 
-      <div className="p-6 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+      <div className="p-6 rounded-xl border border-border-light dark:border-border-dark bg-surface dark:bg-surface-dark shadow-tactile">
         {status === 'success' ? (
-          <div className="p-4 rounded-md bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 text-teal-900 dark:text-teal-200 space-y-2">
+          <div className="p-4 rounded-lg bg-sage-300/30 dark:bg-sage-500/20 border border-sage-500 text-ink dark:text-cream space-y-2">
             <div className="flex items-center gap-2 font-bold text-sm">
-              <CheckCircle2 className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+              <CheckCircle2 className="w-5 h-5 text-sage-700 dark:text-sage-300" />
               <span>Message Transmitted Successfully</span>
             </div>
-            <p className="text-xs leading-relaxed">
-              Your message has been verified and recorded in the system audit log. Technical administrators will review your inquiry.
+            <p className="text-xs leading-relaxed text-ink-muted dark:text-muted-dark">
+              Your inquiry has been recorded in the system audit log. Technical administrators will review your submission.
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+          <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono">
             {status === 'error' && (
-              <div className="p-3 rounded-md bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-300 flex items-start gap-2">
+              <div className="p-3 rounded-lg bg-critical/10 border border-critical text-critical flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>{errorMessage}</span>
               </div>
             )}
 
-            {/* Honeypot field (hidden from legitimate users) */}
+            {/* Honeypot field */}
             <div className="hidden" aria-hidden="true">
-              <label htmlFor="website_hp">Leave this field blank</label>
+              <label htmlFor="website_hp">Leave blank</label>
               <input
                 type="text"
                 id="website_hp"
@@ -102,9 +101,9 @@ export const ContactPage: FC = () => {
               />
             </div>
 
-            <div>
-              <label htmlFor="name" className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Full Name *
+            <div className="space-y-1">
+              <label htmlFor="name" className="block text-ink dark:text-cream font-bold">
+                Full Name or Institution *
               </label>
               <input
                 type="text"
@@ -112,14 +111,14 @@ export const ContactPage: FC = () => {
                 required
                 value={formData.name}
                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-3 py-2 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus-visible:ring-2 focus-visible:ring-teal-500"
-                placeholder="Engineer or Researcher Name"
+                className="w-full px-3 py-2 rounded-lg border border-border-light dark:border-border-dark bg-cream dark:bg-bg-dark text-ink dark:text-cream focus:outline-none focus:ring-2 focus:ring-sage-700 font-mono text-xs"
+                placeholder="Dr. S. Ramanujam"
               />
             </div>
 
-            <div>
-              <label htmlFor="email" className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Institutional Email *
+            <div className="space-y-1">
+              <label htmlFor="email" className="block text-ink dark:text-cream font-bold">
+                Contact Email Address *
               </label>
               <input
                 type="email"
@@ -127,36 +126,37 @@ export const ContactPage: FC = () => {
                 required
                 value={formData.email}
                 onChange={e => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-3 py-2 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus-visible:ring-2 focus-visible:ring-teal-500"
-                placeholder="name@organization.gov.in"
+                className="w-full px-3 py-2 rounded-lg border border-border-light dark:border-border-dark bg-cream dark:bg-bg-dark text-ink dark:text-cream focus:outline-none focus:ring-2 focus:ring-sage-700 font-mono text-xs"
+                placeholder="s.ramanujam@institute.ac.in"
               />
             </div>
 
-            <div>
-              <label htmlFor="message" className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Technical Inquiry or Observation *
+            <div className="space-y-1">
+              <label htmlFor="message" className="block text-ink dark:text-cream font-bold">
+                Technical Feedback or Inquiry *
               </label>
               <textarea
                 id="message"
                 required
-                rows={4}
+                rows={5}
                 value={formData.message}
                 onChange={e => setFormData({ ...formData, message: e.target.value })}
-                className="w-full px-3 py-2 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus-visible:ring-2 focus-visible:ring-teal-500"
-                placeholder="Detail network segment observations, model assumptions, or dataset questions..."
+                className="w-full px-3 py-2 rounded-lg border border-border-light dark:border-border-dark bg-cream dark:bg-bg-dark text-ink dark:text-cream focus:outline-none focus:ring-2 focus:ring-sage-700 font-mono text-xs leading-relaxed"
+                placeholder="Detail observations on culvert flow capacity or catchment boundaries..."
               />
             </div>
 
-            <div className="flex items-start gap-2 pt-1">
-              <input
-                type="checkbox"
-                id="consent"
-                checked={formData.consent}
-                onChange={e => setFormData({ ...formData, consent: e.target.checked })}
-                className="mt-0.5 rounded text-teal-600 focus:ring-teal-500"
-              />
-              <label htmlFor="consent" className="text-slate-600 dark:text-slate-400 leading-tight">
-                I understand that PRAVAHA stores inquiries in local audit storage for engineering review, and that this platform does not dispatch emergency services.
+            <div className="pt-2">
+              <label className="flex items-start gap-2.5 cursor-pointer text-ink dark:text-cream">
+                <input
+                  type="checkbox"
+                  checked={formData.consent}
+                  onChange={e => setFormData({ ...formData, consent: e.target.checked })}
+                  className="mt-0.5 accent-sage-500 rounded"
+                />
+                <span className="text-[11px] leading-snug text-ink-muted dark:text-muted-dark">
+                  I consent to the recording of this technical correspondence in the administrative log for research and verification purposes.
+                </span>
               </label>
             </div>
 
@@ -164,10 +164,10 @@ export const ContactPage: FC = () => {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-md bg-teal-600 hover:bg-teal-700 text-white transition-colors disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg border-2 border-ink bg-sage-500 hover:bg-sage-700 text-ink hover:text-cream font-bold text-xs shadow-tactile transition-all active:translate-x-[2px] active:translate-y-[2px] disabled:opacity-50"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>{status === 'submitting' ? 'Transmitting...' : 'Submit Inquiry'}</span>
+                <span>{status === 'submitting' ? 'Submitting...' : 'Send Inquiry'}</span>
               </button>
             </div>
           </form>
