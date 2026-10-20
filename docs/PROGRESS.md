@@ -24,14 +24,14 @@
   - [x] Workflow row ("Analyse scenarios", "Identify risk areas", "Plan informed actions")
   - [x] Methodology summary, limitations, FAQ, preloader recolored
 
-NEXT STEP: R4 Workspace (/workspace)
+- [x] **R4: Workspace (/workspace)**
+  - [x] Layout with slim sidebar, top bar, demo area label
+  - [x] Map overlay: "Layers" panel
+  - [x] Right panel: "Simulation Controls" with storm presets, sliders, run/reset
+  - [x] Bottom area: "Simulation Results (Summary)" with KPI tiles, legend, bottom tabs, timeline scrubber
+  - [x] Flowing pipes animation and rain effect toggle
 
-- [ ] **R4: Workspace (/workspace)**
-  - [ ] Layout with slim sidebar, top bar, demo area label
-  - [ ] Map overlay: "Layers" panel
-  - [ ] Right panel: "Simulation Controls" with storm presets, sliders, run/reset
-  - [ ] Bottom area: "Simulation Results (Summary)" with KPI tiles, legend, bottom tabs, timeline scrubber
-  - [ ] Flowing pipes animation and rain effect toggle
+NEXT STEP: R5 Scenario Comparison & Segment Detail
 - [ ] **R5: Scenario Comparison & Segment Detail**
   - [ ] Scenario Comparison page (`/scenarios`) with side-by-side maps, parameters, comparison metrics card
   - [ ] Segment Detail drawer/page (`/bottleneck` & segment view) with water gauge, flow profile, elevation profile, bottleneck ranking factors

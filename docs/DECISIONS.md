@@ -57,3 +57,8 @@ This log records technical, architectural, and design decisions made during the 
 - Decision: Removed `SiteCursor.tsx` and all listeners/DOM wrappers. Adopted native browser cursors exclusively. Established unified CSS custom properties and Tailwind tokens for light and dark themes with WCAG AA compliance. Baseline before-screenshots captured across all 10 routes in `docs/redesign/before/`.
 - Rationale: Native cursors eliminate pointer lag, improve accessibility, and align with engineering software expectations.
 
+## Decision 13: Dedicated Full-Viewport Workspace Architecture & WebGL Fallback
+- Context: Package R4 redesign mandates a dedicated engineering dashboard for `/workspace` matching the mockup (slim left sidebar with brand mark, top bar with demo area label, top-left floating layers panel, top-right floating simulation controls with storm presets, bottom KPI tiles with accumulation ramp legend and bottom tabs). In addition, headless and low-power devices can throw WebGL errors when running MapLibre.
+- Decision: Rendered `/workspace` as a dedicated full-viewport dashboard shell that conditionally omits the standard landing website header and marketing footer. Added a try-catch safeguard around MapLibre map initialization with a graceful 2D vector fallback state. Implemented animated flowing dashed lines whose speed and colors shift to amber and critical styles upon 100% capacity exceedance, alongside a Canvas raindrop overlay tied to rainfall intensity and user settings.
+- Rationale: Eliminates redundant double navigation bars on the workspace, prevents interface crashing in non-accelerated environments, and adheres to strict tactile design guidelines with files modularized under 250 lines.
+

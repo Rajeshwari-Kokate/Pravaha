@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
@@ -23,13 +23,15 @@ import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
-export function App() {
+function AppLayout() {
+  const location = useLocation();
+  const isWorkspace = location.pathname.startsWith('/workspace');
+
   const [storageModalOpen, setStorageModalOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [cookieBannerOpen, setCookieBannerOpen] = useState(false);
   const [passcodeModalOpen, setPasscodeModalOpen] = useState(false);
 
-  // Global Cmd+K / Ctrl+K keyboard shortcut for Site Search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -41,10 +43,6 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleOpenStoragePreferences = () => {
-    setCookieBannerOpen(true);
-  };
-
   const handleClearPreferences = () => {
     localStorage.removeItem('pravaha-theme');
     localStorage.removeItem('pravaha-consent');
@@ -55,72 +53,72 @@ export function App() {
   };
 
   return (
-    <ErrorBoundary>
-      <BrowserRouter>
-        {/* 1.2s Tactical Preloader */}
-        <Preloader />
+    <>
+      <Preloader />
+      {!isWorkspace && <FloatingTools />}
 
-        {/* Floating Tools: Scroll progress bar and back-to-top */}
-        <FloatingTools />
+      <SiteSearchModal
+        isOpen={searchModalOpen}
+        onClose={() => setSearchModalOpen(false)}
+      />
 
-        {/* Site Search Modal (Cmd/Ctrl+K) */}
-        <SiteSearchModal
-          isOpen={searchModalOpen}
-          onClose={() => setSearchModalOpen(false)}
-        />
+      <PasscodeModal
+        isOpen={passcodeModalOpen}
+        onClose={() => setPasscodeModalOpen(false)}
+      />
 
-        {/* Operator Passcode Area Modal */}
-        <PasscodeModal
-          isOpen={passcodeModalOpen}
-          onClose={() => setPasscodeModalOpen(false)}
-        />
+      <CookieBanner
+        isOpenOverride={cookieBannerOpen}
+        onCloseOverride={() => setCookieBannerOpen(false)}
+      />
 
-        {/* Cookie & Local Storage Banner */}
-        <CookieBanner
-          isOpenOverride={cookieBannerOpen}
-          onCloseOverride={() => setCookieBannerOpen(false)}
-        />
+      <div className="flex flex-col min-h-screen bg-background text-ink transition-colors selection:bg-pink selection:text-ink">
+        {!isWorkspace && <Header onOpenSearch={() => setSearchModalOpen(true)} />}
 
-        <div className="flex flex-col min-h-screen bg-[#FEFAF3] dark:bg-[#1C2620] text-[#24302A] dark:text-[#FEFAF3] transition-colors selection:bg-[#F6E2E9] selection:text-[#24302A]">
-          {/* Main Navigation Header */}
-          <Header onOpenSearch={() => setSearchModalOpen(true)} />
+        <main id="main-content" className="flex-1 flex flex-col min-w-0">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/workspace" element={<WorkspacePage />} />
+            <Route path="/scenarios" element={<ScenariosPage />} />
+            <Route path="/bottleneck" element={<BottleneckPage />} />
+            <Route path="/reports/:id" element={<ReportPage />} />
+            <Route path="/reports" element={<ReportPage />} />
+            <Route path="/methodology" element={<MethodologyPage />} />
+            <Route path="/learn" element={<LearnPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </main>
 
-          {/* Page Routing Container */}
-          <main id="main-content" className="flex-1">
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/workspace" element={<WorkspacePage />} />
-              <Route path="/scenarios" element={<ScenariosPage />} />
-              <Route path="/bottleneck" element={<BottleneckPage />} />
-              <Route path="/reports/:id" element={<ReportPage />} />
-              <Route path="/reports" element={<ReportPage />} />
-              <Route path="/methodology" element={<MethodologyPage />} />
-              <Route path="/learn" element={<LearnPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/privacy" element={<PrivacyPage />} />
-              <Route path="/terms" element={<TermsPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </main>
-
-          {/* Infrastructure Footer */}
+        {!isWorkspace && (
           <Footer
-            onOpenStoragePreferences={handleOpenStoragePreferences}
+            onOpenStoragePreferences={() => setCookieBannerOpen(true)}
             onOpenOperatorPasscode={() => setPasscodeModalOpen(true)}
           />
+        )}
 
-          {/* Storage & Cookie Preferences Modal */}
-          <ConfirmationModal
-            isOpen={storageModalOpen}
-            title="Storage and Cookie Preferences"
-            description="PRAVAHA stores local interface preferences (theme, lesson progress) in localStorage and optional UTM campaign attribution in sessionStorage. No third-party tracking scripts or advertising cookies are utilized. Would you like to reset your stored local preferences?"
-            confirmLabel="Reset Stored Data"
-            cancelLabel="Keep Preferences"
-            isDestructive={true}
-            onConfirm={handleClearPreferences}
-            onClose={() => setStorageModalOpen(false)}
-          />
-        </div>
+        <ConfirmationModal
+          isOpen={storageModalOpen}
+          title="Storage and Cookie Preferences"
+          description="PRAVAHA stores local interface preferences (theme, lesson progress) in localStorage and optional UTM campaign attribution in sessionStorage. No third-party tracking scripts or advertising cookies are utilized. Would you like to reset your stored local preferences?"
+          confirmLabel="Reset Stored Data"
+          cancelLabel="Keep Preferences"
+          isDestructive={true}
+          onConfirm={handleClearPreferences}
+          onClose={() => setStorageModalOpen(false)}
+        />
+      </div>
+    </>
+  );
+}
+
+export function App() {
+  return (
+    <ErrorBoundary>
+      <BrowserRouter>
+        <AppLayout />
       </BrowserRouter>
     </ErrorBoundary>
   );
